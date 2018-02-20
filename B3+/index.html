@@ -10,28 +10,44 @@
     <script>
         //str=prompt("Введите строку","2*(3+1)");
 
-str=prompt("Введите строку","4*2");
+str=prompt("Введите строку","2*(1+3+)");
 
-var myMath = {
+
+var arr = str.split('');
+console.log(arr);
+console.log(calcFragment(arr));
+console.log(calc(arr));
+
+
+
+
+
+
+
+function calcFragment (arrFragment){
+  for(var i=0;i<mass.length;i++){
+    if (mass[i]==='(') return calcFragment (mass[i+1]+mass[i+2]+mass[i+3])
+  }
+}
+  var myMath = {
   "+" : function(a,b){ return a+b },
   "-" : function(a,b){ return a-b },
   "*" : function(a,b){ return a*b },
   "/" : function(a,b){ return a/b },
-};
+  };
 
-for(var i=0;i<str.length;i++){
-  var value=str[i];
+for(var i=0;i<arrFragment.length;i++){
+  var value=arrFragment[i];
 if(value in myMath){
 var func=myMath[value];
 var index=i;
   }
 }
-a=Number(str[index-1]);
-b=Number(str[index+1]);
 
-alert(func(a,b));
-console.log(func(a,b));
-
+a=Number(arrFragment[index-1]);
+b=Number(arrFragment[index+1]);
+return func(a,b);
+}
 
 
 

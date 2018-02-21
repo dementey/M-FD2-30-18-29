@@ -12,6 +12,15 @@
 
 "use strict";
 
+alert(reverseString(prompt('Введите строку','Чистая функция')));
+
+function reverseString(str) {
+    var normArray = str.split(""); 
+    var revArray = normArray.reverse();  
+    var revString = revArray.join(""); 
+    return revString;
+}
+
 // B2+
 // Написать чистую функцию, эффективно переворачивающую строку задом наперёд.
 // Реализация функции не должна использовать циклов и рекурсии.

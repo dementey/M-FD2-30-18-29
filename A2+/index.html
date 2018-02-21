@@ -1,0 +1,39 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<style></style>
+
+<body>
+
+<script>
+
+"use strict";
+
+function nonSpace(stringData){
+  var begin=0, end=0, temp='';
+  while(stringData.charAt(begin)===' ') begin++;
+    if (begin===(stringData.length)) return '';
+    else while(stringData.charAt(stringData.length-1-end)===' ') end++;
+  return stringData.substr(begin,(stringData.length-begin-end));
+  } 
+  
+var stringData='  Строка 12345  ';  
+
+console.log('|'+nonSpace('     ')+'|');
+console.log('|'+stringData+'|');
+console.log('|'+nonSpace(stringData)+'|');
+
+
+
+//A2+
+//Написать чистую функцию, эффективно удаляющую из переданной ей строки
+//все начальные и конечные пробелы, не используя метод строки trim.
+//Если умеете работать с регулярными выражениям - не используйте и их :)
+
+
+</script> 
+
+</body>

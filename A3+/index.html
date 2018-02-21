@@ -1,0 +1,43 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<style></style>
+
+<body>
+
+<script>
+
+"use strict";
+
+alert(isPal(prompt('Введите палиндромом','  А роза, упала на - лапу Азора!!  ')));
+
+function isPal(str){
+  var regExp = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~\s]/g;
+  var text=str.replace(regExp, '').replace(/[ё]/g, 'е').replace(/[ъ]/g, 'ь').toLowerCase();
+  var p1 = 0, p2 = text.length - 1;
+  while (p1 < p2)
+    if (text.charAt(p1++) != text.charAt(p2--)) return false;
+  return true;
+}
+
+
+
+//A3+
+//Написать чистую функцию, проверяющую, что переданная ей фраза является палиндромом.
+//(Палиндром - это фраза, которая слева направо читается так же как справа налево)
+//Массивы при решении не использовать.
+//При проверке должны игнорироваться:
+// - регистр букв;
+// - пробелы;
+// - знаки препинания;
+// - мягкие и твёрдые знаки;
+// - разница между буквами "е" и "ё".-->
+
+
+
+</script> 
+
+</body>

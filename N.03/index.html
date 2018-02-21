@@ -1,0 +1,70 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<style></style>
+
+<body>
+
+<script>
+
+ "use strict";
+
+function inputText (a) {
+  var inputResult = prompt('Заполните поле '+arguments[0]+ ' на русском языке ',arguments[1]);
+    while (nonCyrillicText(inputResult)===false||Boolean(inputResult)===false) inputResult = prompt('Повторите попытку ввода поля '+arguments[0]+' на русском языкe', arguments[1]);
+    return inputResult;
+  }
+
+function nonCyrillicText(b){
+  if (b===null) return false;
+  else
+   {var result=true,resultAll;
+   for (var i=0;i<b.length;i++) resultAll=(result&&(b.charCodeAt(i)<1040||b.charCodeAt(i)>1103));
+    return !resultAll;}
+  }
+  
+function inputNumber (){
+  var inputResult = parseInt(prompt('Введите возраст',20));
+  while (!Boolean(inputResult)||inputResult<=0||inputResult>=120)
+	  inputResult = parseInt(prompt('Повторите попытку ввода возраста', 20));
+	return parseInt(inputResult);
+  }
+
+
+var yourSurname=inputText('фамилия','Иванов');
+var yourName=inputText('имя','Иван');
+var yourPatronymic=inputText('отчество','Иванович');
+var yourAge=inputNumber();	
+var gender = confirm('Ваш пол - мужской? Если вы женщина нажмите отмена');
+var yourGender, yourRetirementAge;
+
+yourGender=(gender === true)?('мужской'):('женский');
+if (gender === true)
+  yourRetirementAge=(yourAge>61)?('вы пенсионер'):('вы не пенсионер');
+else
+  yourRetirementAge=(yourAge>56)?('вы пенсионерка'):('вы не пенсионерка');
+			
+alert(' ФИО: '+ yourSurname+' '+ yourName+' '+yourPatronymic+'\n возраст, лет: '+yourAge+'\n возраст, дней: '+yourAge*365+'\n пол: ' + yourGender+'\n пенсионный возраст: '+yourRetirementAge);
+
+// N.03 Домашнее задание ANKETA
+// Создать проект ANKETA. Спросить у пользователя:
+// фамилию, имя, отчество РАЗДЕЛЬНО (оператором prompt)
+// возраст в годах (оператором prompt)
+// пол (оператором confirm, например, "ваш пол - мужской?")
+// и вывести оператором alert анкету пользователя по примеру:
+
+// ваше ФИО: Иванов Иван Иванович
+// ваш возраст в годах: 20
+// ваш возраст в днях: 7300
+// через 5 лет вам будет: 25
+// ваш пол: мужской
+// вы на пенсии: нет
+// Должен быть контроль корректности вводимых пользователем данных (например, фамилия не должна быть пустой, возраст должен быть корректной цифрой и т.д.).
+// Оператор alert в коде должен использоваться ровно один раз.
+
+</script> 
+
+</body>

@@ -1,0 +1,44 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<style></style>
+
+<body>
+
+<script>
+
+'use strict';
+
+console.log(
+  sumVowels(
+    prompt(
+      'Введите строку на русском языке',
+      'Образовательный центр Парка высоких технологий'
+    )
+  )
+);
+
+
+function sumVowels(str) {
+  var pattern = 'аоэиуыеёюя';
+  var counter = 0;
+  var strLowerCase = str.toLowerCase();
+  for (var k = 0; k < strLowerCase.length; k++)
+    for (var i = 0; i < pattern.length; i++)
+      if (pattern.charCodeAt(i) === strLowerCase.charCodeAt(k)) counter++;
+  return counter;
+}
+
+
+
+//N.07 Домашнее задание VOWELS
+//Написать «чистую» функцию для эффективного подсчёта количества русских гласных букв в строке.
+//Спросить у пользователя строку. Вывести в консоль количество русских гласных букв в ней.
+
+
+</script> 
+
+</body>

@@ -10,25 +10,18 @@
     <script>
         //str=prompt("Введите строку","2*(3+1)");
 
-str=prompt("Введите строку","2*(1+3+)");
-
-
+str=prompt("Введите строку","2*(1+3)");
 var arr = str.split('');
 console.log(arr);
-console.log(calcFragment(arr));
-console.log(calc(arr));
+console.log(calcFragment('1+3'));
 
-
-
-
-
-
-
-function calcFragment (arrFragment){
+function calcFragment2 (arrFragment){
   for(var i=0;i<mass.length;i++){
     if (mass[i]==='(') return calcFragment (mass[i+1]+mass[i+2]+mass[i+3])
   }
+}
 
+function calcFragment (arrFragment){
   var myMath = {
   "+" : function(a,b){ return a+b },
   "-" : function(a,b){ return a-b },
@@ -36,17 +29,17 @@ function calcFragment (arrFragment){
   "/" : function(a,b){ return a/b },
   };
 
-for(var i=0;i<arrFragment.length;i++){
-  var value=arrFragment[i];
-if(value in myMath){
-var func=myMath[value];
-var index=i;
+  for(var i=0;i<arrFragment.length;i++){
+    var value=arrFragment[i];
+    if(value in myMath){
+      var func=myMath[value];
+      var index=i;
+    }
   }
-}
 
-a=Number(arrFragment[index-1]);
-b=Number(arrFragment[index+1]);
-return func(a,b);
+  var a=Number(arrFragment[index-1]);
+  var b=Number(arrFragment[index+1]);
+  return func(a,b);
 }
 
 

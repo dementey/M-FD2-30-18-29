@@ -1,0 +1,34 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<style></style>
+
+<body>
+
+<script>
+
+"use strict";
+
+function ToyCar(carNum) { 
+  this.num=carNum; // публичное свойство создаётся как элемент хэша this 
+
+  this.beep=function() { // публичный метод создаётся как эл-т хэша this 
+    console.log('toycar num='+this.num+' beeeeep!'); 
+  } 
+}
+
+
+var car1=new ToyCar('1111-AAA');
+console.log(car1.num);
+car1.beep();
+console.log(car1);
+console.log(typeof car1);
+
+
+
+</script> 
+
+</body>

@@ -1,0 +1,57 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<style></style>
+
+<body>
+
+<script>
+
+"use strict";
+var m=[
+  { fio:'Иванов', zp:1000 },
+  { fio:'Петров', zp:800 },
+  { fio:'Сидоров', zp:1100 },
+  { fio:'Егоров', zp:850 }
+];
+var m2=[
+  { fio:'Б', zp:1000 },
+  { fio:'Д', zp:800 },
+  { fio:'Г', zp:1100 },
+  { fio:'В', zp:850 },
+  { fio:'А', zp:850 },
+];
+
+function compareFIO(a,b) {
+    console.log(a.fio+a.zp);
+    console.log(b.fio+b.zp);
+  if ( a.fio<b.fio )  {console.log(a.fio<b.fio); return -1;};//можно указать любое отрицательное число
+  if ( a.fio>b.fio )  {console.log(a.fio<b.fio); return 1;};//можно указать любое положительнон число
+  return 0;
+}
+
+function compareZP(a,b) {
+  return b.zp-a.zp;
+}
+ 
+
+m.sort(compareFIO);
+console.log( m );
+//[ {fio:'Егоров', zp:850}, {fio:'Иванов', zp:1000}, {fio:'Петров', zp:800}, {fio:'Сидоров', zp:1100} ]
+
+
+
+
+m2.sort(compareFIO);
+console.log( m2 );
+
+//m.sort(compareZP);
+//console.log( m );
+//[ {fio:'Сидоров', zp:1100}, {fio:'Иванов', zp:1000}, {fio:'Егоров', zp:850}, {fio:'Петров', zp:800} ]
+
+</script> 
+
+</body>

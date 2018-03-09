@@ -32,7 +32,7 @@ function calc(str){
     }
 
     var calcFragment = function (){
-        if ((c >= "1") && (c <= "9")){
+        if ((c >= "0") && (c <= "9")){
             var h = Number(c);
             c = currentSymbol();
             return Number(h); 

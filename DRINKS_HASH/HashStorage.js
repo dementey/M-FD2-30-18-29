@@ -1,5 +1,5 @@
 
-function HashStorage (key,value){
+function HashStorage (){
     var hashStore={};
     this.addValue = (key,value) => {hashStore[key]=value; return this;};
     this.getValue = (key) => {if (key in hashStore) return hashStore[key]; else return false;};

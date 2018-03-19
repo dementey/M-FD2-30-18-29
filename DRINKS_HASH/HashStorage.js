@@ -1,3 +1,4 @@
+"use strict";
 
 function HashStorage (){
     var hashStore={};
@@ -8,8 +9,9 @@ function HashStorage (){
 }
 
 var drinkStorage=new HashStorage();
-drinkStorage.addValue('Лимонад', ['нет','Лимон, сахар, вода.']).addValue('Сидр', ['да','Получается в результате брожения яблочного сока определённых сортов, без добавления дрожжей.']);
-drinkStorage.addValue('Чай', ['нет','Чай, это напиток, получаемый варкой, завариванием или настаиванием листа чайного куста,.']);
+drinkStorage.addValue('Лимонад', {alc:'нет', rcp:'Лимон, сахар, вода.'});
+drinkStorage.addValue('Сидр', {alc:'да',rcp:'Получается в результате брожения яблочного сока определённых сортов, без добавления дрожжей.'});
+drinkStorage.addValue('Чай', {alc:'нет', rcp:'Чай, это напиток, получаемый варкой, завариванием или настаиванием листа чайного куста.'});
  
 function inputDrink (){ 
   var alcohol;
@@ -19,7 +21,7 @@ function inputDrink (){
   else alcohol = "Нет";
   do var recipe = prompt('Введите рецепт напитка на русском языке');
   while (nonCyrillicText(key)===false||Boolean(key)===false);
-  return drinkStorage.addValue(key,[alcohol,recipe]);
+  return drinkStorage.addValue(key,{alc:alcohol,rcp:recipe});
 }
 
 function getDrink (){ 
@@ -28,7 +30,7 @@ function getDrink (){
   while (nonCyrillicText(key)===false||Boolean(key)===false);
   drinkHash=drinkStorage.getValue(key);
   if(drinkStorage.getValue(key)===false)  alert('Такого напитка нет в хранилище');
-  else alert('Напиток - ' + key + '\nАлкогольный: ' + drinkHash[0] +  '\nРецепт приготовления: ' + drinkHash[1]);
+  else alert('Напиток - ' + key + '\nАлкогольный: ' + drinkHash.alc +  '\nРецепт приготовления: ' + drinkHash.rcp);
   }
 
 function deleteDrink (){ 
@@ -52,8 +54,6 @@ function nonCyrillicText(b){
     return !resultAll;
   }
 }
-
-
 
 
 // N.13 Домашнее задание DRINKS_HASH

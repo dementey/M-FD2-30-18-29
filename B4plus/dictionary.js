@@ -1,8 +1,47 @@
 
 "use strict";
 
-var dictDb=["ТАРА","ЛИПА","ТУРА","ЛУЖА","ПАРК","ЛОЖЬ","ЛУПА","ПЛОТ","МУРА","ПАУК","ПАУТ","ПЛУТ","ЛОЖА","СЛОТ","ПАРА"];
-console.log(dictDb);
+dictFunc('ЛИCА','ЛОСЬ');
+dictFunc('МУХА','СЛОН');
+dictFunc('МУХА','ПЛОД');
+dictFunc('МУХА','МУКА');
+
+function dictFunc(str1,str2){
+    var words=['ТАРА','ЛИПА','ТУРА','ЛУЖА','ПАРК','ЛОЖЬ','ЛУПА','ПЛОТ','МУРА','ПАУК','ПАУТ','ПЛУТ','ЛОЖА','СЛОТ','ПАРА'];
+    words.push(str2);
+    var used={};
+    console.log((f(str1,str2,words)).reduce(fra));
+    
+    function fra(r,v,i,a) { 
+        return r+'-'+v; 
+    }
+
+    function f(str1,str2,words){
+        var wordsCount={};
+        used[str1]=true;
+        for ( var i=0; i<words.length; i++ ) {
+            var word=words[i];
+            var n=0;
+            for (var k=0;k<str1.length; k++) if (str1.charAt(k) !== word.charAt(k)) n++;
+            wordsCount[word]=n;
+        }
+        var wordsCountArr=[];
+        for ( word in wordsCount ) wordsCountArr.push( { word:word, count:wordsCount[word] } );
+        function compareFunc(a,b) { return a.count-b.count; }
+        wordsCountArr.sort(compareFunc);
+
+        for ( var z=0; z<words.length; z++ ) {
+            var wordCount=wordsCountArr[z];
+            words[z]=wordCount.word;
+        }
+        var result=words.shift();
+        while (str1!==str2) {used[result]=true; return f(result,str2,words,used); }
+        return Object.keys(used);
+    }
+    
+}
+
+ 
 
 // B4+
 // Дан большой массив слов - словарь.
@@ -21,4 +60,4 @@ console.log(dictDb);
 // Нужно формировать набор "ходов" - слов, которые можно получить из текущего слова; из каждого из этих слов - снова набор "ходов",
 // до тех пор пока не наткнёмся на то слово к которому стремимся.
 // Но в условиях сильно ограниченного количества "ходов" (т.е. с очень малым словарём) на каждом уровне у вас будет всего-то один-два хода,
-// поэтому, технически это поиск в глубину, фактически - простой перебор с рекурсией.
+// поэтому, технически это поиск в глубину, фактически - простой перебор с рекурсией

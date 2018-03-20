@@ -1,13 +1,7 @@
 "use strict";
 
-function buildWrapper(texts) {
-    switch ( texts ) {
-        case "H1": return (texts) => {return('<H1>' + texts.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;") + '</H1>');}
-          break;
-        case "P": return (texts) => {return('<P>' + texts.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;") + '</P>');}
-          break;
-        default: console.log('Введен неизвестный тег');
-      }
+var buildWrapper=function (tag) {
+  return (texts) => {return('<'+tag+'>' + texts.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;") + '</'+tag+'>');}
 }
 
 var wrapH1=new buildWrapper("H1");

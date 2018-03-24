@@ -1,0 +1,8 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "D.25b Работа с положением и размером элементов",
+  "scripts": {
+    "start": "lite-server"
+  }
+}

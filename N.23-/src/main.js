@@ -24,20 +24,25 @@ var formDef2=
   {label:'Зарегистрироваться:',kind:'submit'},
 ];
 
-function DinFormCreate (_elem, _formDef) {
-  console.log(_elem);
-  var form=document.forms[_elem];
-  //forms.innerHTML='_formDef';
-  console.log(form);
-  var self=this; // сохраняем ссылку на this в любой переменной, обычно self
+function DinFormCreate (elem, formDef) {
+ elem.innerHTML+='<tr>'+formDef.forEach(f)+'<input>'+'</tr>';
+ // elem.setAttribute('kind',formDef[0].kind);
+  
+  //elem.appendChild('tr');
+  //document.createElement('tr');
 
-  self.elem=_elem; // запоминаем, с каким IMG будем работать
+  console.log(elem);
+
 }
 
+function f(v,i,a) {
+  console.log( i + '/' + v.label+v.kind);
+  
+ }
 
-console.log (document.getElementById('Form1'))
-var formDef1=new DinFormCreate ( 'Form1', formDef1);
-//var formDef2=new DinFormCreate ( document.forms.Form2, formDef2);
+var formDef1=new DinFormCreate ( document.forms.Form1, formDef1);
+//input.setAttribute("name", "file");
+//var input = document.createElement('<input type="file" name="file" />');
 
 
 

@@ -1,7 +1,11 @@
 "use strict";
 
 var BuildWrapper=function (tag) {
-  return (texts,atr) => {return('<'+tag+' '+ if (var key in atr) Object.keys(atr)+'>' + texts.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;") + '</'+tag+'>');}
+  return (texts,attrHash) => {
+    var attr='';
+    if(typeof attrHash === 'object') for ( var k in attrHash) attr+=' ' + k + '="' + attrHash[k] + '"'; 
+    return('<'+ tag + attr +'>' + texts.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;") + '</'+ tag +'>');
+  }
 }
 
 var WrapH1=new BuildWrapper("H1");
@@ -12,6 +16,9 @@ console.log( WrapP("Однажды в студёную зимнюю пору") )
 console.log( WrapP("Вкусные M&M's") );
 console.log( WrapH1("СТИХИ",{align:"center"}) );
 console.log( WrapP("Однажды в <студёную> зимнюю пору") );
+console.log( WrapH1("СТИХИ",{align:"center", width:"50" }) );
+
+
 // B6+
 // Доработайте функцию для оборачивания текста в тег из задания B5+, чтобы в вызове функции
 // можно было, при желании, указывать атрибуты в виде хэша.

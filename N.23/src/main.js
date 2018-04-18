@@ -46,7 +46,7 @@ function DinFormCreate (elem, formDef) {
         case 'shorttext': temp+='<tr><td>'+v.label+'</td><td><input style="width: 200px" type="'+v.kind+'" name="'+v.name+'"></td></tr>'; break;
         case 'combo':     temp+='<tr><td>'+v.label+'</td><td style="padding-left: 1px"><select style="width: 200px; margin-left: 0px" type="'+v.kind+'" name="'+v.name+'">'+variantsCombo+'</select>'; break;
         case 'radio':     temp+='<tr><td>'+v.label+'</td><td  type="'+v.kind+'" name="'+v.name+'">'+variantsRadio+'</td></tr>'; break;
-        case 'check':     temp+='<tr><td>'+v.label+'</td><td><input type="'+v.kind+'" name="'+v.name+'" checked></td></tr>'; break;
+        case 'check':     temp+='<tr><td>'+v.label+'</td><td><input type="checkbox" name="'+v.name+'" checked></td></tr>'; break;
         case 'memo':      temp+='<tr><td colspan=2>'+v.label+'<br><textarea  type="'+v.kind+'" name="'+v.name+'"style="width: 608px; height: 50px"></textarea></td></tr>'; break;
         case 'submit':    temp+='<tr><td><input  type="'+v.kind+'" value='+v.label+'></td></tr>'; break;
       }

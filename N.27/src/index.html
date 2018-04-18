@@ -1,0 +1,65 @@
+<html>
+
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+</head>
+
+<body>
+    <form name='info' action='http://fe.it-academy.by/TestForm.php' novalidate>
+        Разработчики:
+        <input type=text name='author' style='width: 453px' value='IT-Академия'>
+        <span id='authorErr' style='color:red'> </span>
+        <br />
+        <br /> Название сайта:
+        <input type=text name='sitename' style='width: 453px' value='Сайт IT-Академии'>
+        <span id='sitenameErr' style='color:red'> </span>
+        <br />
+        <br />URL сайта:
+        <input type=text name='siteurl' style='width: 453px' value='https://www.it-academy.by/'>
+        <span id='siteurlErr' style='color:red'> </span>
+        <br />
+        <br /> Дата запуска сайта:
+        <input type=text name='startdate' style='width: 80px' value='18.04.2018'>
+        <span id='startdateErr' style='color:red'> </span>
+        <br />
+        <br /> Посетителей в сутки:
+        <input type=text name='visitors' style='width: 80px' value='100'>
+        <span id='visitorsErr' style='color:red'> </span>
+        <br />
+        <br /> E-mail для связи:
+        <input type=text name='email' style='width: 200px' value='Info@it-academy.by'>
+        <span id='emailErr' style='color:red'> </span>
+        <br />
+        <br /> Рубрика каталога:
+        <select name='rubric'>
+            <option value=1>здоровье</option>
+            <option value=2>домашний уют</option>
+            <option value=3>бытовая техника</option>
+        </select>
+        <span id='rubricErr' style='color:red'></span>
+        <br />
+        <br />Размещение:
+        <span id='placeErr' style='color:red'></span>
+        <div id='place' style='width: 200px'>
+            <input type=radio name='placing' value=11 id='r1' checked>бесплатное
+            <br />
+            <input type=radio name='placing' value=22 id='r2'>платное
+            <br />
+            <input type=radio name='placing' value=33 id='r3'>VIP
+            <br />
+        </div>
+        <br /> Разрешить отзывы:
+        <input type=checkbox name='comments' id='с1' checked>
+        <span id='commentsErr' style='color:red'></span>
+        <br />
+        <br /> Описание сайта:
+        <span id='descriptionErr' style='color:red'></span>
+        <br />
+        <textarea name='description' style='width: 608px; height: 50px'>без описания</textarea>
+        <br />
+        <br />
+        <input type='submit' value='Опубликовать'>
+    </form>
+</body>
+
+</html>

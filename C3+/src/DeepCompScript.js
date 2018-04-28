@@ -14,7 +14,7 @@ function deepComp(aa, bb) {
     if (!(aa instanceof Object) || !(bb instanceof Object)) return false;
     // Проверка вложенности рекурсией
     var temp = Object.keys(aa);
-    return Object.keys(bb).every((i) => { return temp.indexOf(i) !== -1; }) &&//проверям обязательное совпадение ключей хэша
+    return Object.keys(bb).every((i) => { return temp.indexOf(i) !== -1; }) &&//проверяем обязательное совпадение ключей хэша
         temp.every(function (i) { return deepComp(aa[i], bb[i]); });//проверяем обязательное равенство значений хэша с одинаковыми ключами
 }
 

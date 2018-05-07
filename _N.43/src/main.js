@@ -18,8 +18,10 @@ var tennisTag = document.getElementById('tennisGame'),
 
 // работаем с tennisTag задаём размеры-----------------------------------------------------------------------------
 tennisTag.style.width = "700px";
-tennisTag.style.height = "400px";
-
+tennisTag.style.height = "300px";
+var positionTenniTagLeft = tennisTag.getBoundingClientRect().left;
+var positionTennisTagHeight = tennisTag.getBoundingClientRect().height;
+var positionTennisTagWidth = tennisTag.getBoundingClientRect().width;
 // работаем с таймером----------------------------------------------------------------------------------------
 requestAnimationFrame(tick);
 
@@ -41,15 +43,15 @@ racquet_2.classList.add('racquet_2');//устанавливаем готовый
 
 tennisTag.appendChild(racquet_1); //созданную первую(левую) ракетку делаем дочерным элементом tennisTag
 tennisTag.appendChild(racquet_2); //созданную вторую(правую) ракетку делаем дочерным элементом tennisTag
-
+console.log(positionTenniTagLeft);
 racketOption = {
 	// первая(левая) ракетка
-	racquet_1PosX: tennisTag.getBoundingClientRect().left,
-	racquet_1PosY: tennisTag.getBoundingClientRect().top + tennisTag.getBoundingClientRect().height / 2 - racquet_1.getBoundingClientRect().height / 2,
+	racquet_1PosX: positionTenniTagLeft,
+	racquet_1PosY: tennisTag.getBoundingClientRect().top + positionTennisTagHeight / 2 - racquet_1.getBoundingClientRect().height / 2,
 	racquet_1Speed: 0,
 	// вторая(правая) ракетка
-	racquet_2PosX: tennisTag.getBoundingClientRect().left + tennisTag.getBoundingClientRect().width - racquet_2.getBoundingClientRect().width,
-	racquet_2PosY: tennisTag.getBoundingClientRect().top + tennisTag.getBoundingClientRect().height / 2 - racquet_1.getBoundingClientRect().height / 2,
+	racquet_2PosX: positionTenniTagLeft + positionTennisTagWidth - racquet_2.getBoundingClientRect().width,
+	racquet_2PosY: tennisTag.getBoundingClientRect().top + positionTennisTagHeight / 2 - racquet_1.getBoundingClientRect().height / 2,
 	racquet_2Speed: 0,
 	width: 10,
 	height: 100,
@@ -68,7 +70,7 @@ racketOption = {
 
 racquetAreaH = {
 	width: 10,
-	height: tennisTag.getBoundingClientRect().height
+	height: positionTennisTagHeight
 };
 
 racketOption.update();
@@ -78,10 +80,10 @@ ball.classList.add('ball'); //устанавливаем готовый CSS кл
 ball = tennisTag.appendChild(ball); //созданный мячик делаем дочерным элементом tennisTag
 
 ballOptions = {
-	posX: tennisTag.getBoundingClientRect().left + tennisTag.getBoundingClientRect().width / 2 - ball.getBoundingClientRect().width / 2,
-	posY: tennisTag.getBoundingClientRect().top + tennisTag.getBoundingClientRect().height / 2 - ball.getBoundingClientRect().height / 2,
-	speedX: 0, //ballOptions.speedX = 4
-	speedY: 0, //ballOptions.speedY = 2
+	posX: positionTenniTagLeft + positionTennisTagWidth / 2 - ball.getBoundingClientRect().width / 2,
+	posY: tennisTag.getBoundingClientRect().top + positionTennisTagHeight / 2 - ball.getBoundingClientRect().height / 2,
+	speedX: 0,
+	speedY: 0,
 	width: 30,
 	height: 30,
 
@@ -93,8 +95,8 @@ ballOptions = {
 };
 
 areaH = {
-	width: tennisTag.getBoundingClientRect().width,
-	height: tennisTag.getBoundingClientRect().height
+	width: positionTennisTagWidth,
+	height: positionTennisTagHeight
 };
 
 ballOptions.update();
@@ -105,19 +107,19 @@ window.addEventListener("keydown", function (EO) {
 	//EO.preventDefault();
 
 	if (EO.keyCode === 17) {
-		racketOption.racquet_1Speed = 5;
+		racketOption.racquet_1Speed = 10
 	}
 
 	if (EO.keyCode === 16) {
-		racketOption.racquet_1Speed = -5;
+		racketOption.racquet_1Speed = -10;
 	}
 
 	if (EO.keyCode === 40) {
-		racketOption.racquet_2Speed = 5;
+		racketOption.racquet_2Speed = 10;
 	}
 
 	if (EO.keyCode === 38) {
-		racketOption.racquet_2Speed = -5;
+		racketOption.racquet_2Speed = -10;
 	}
 });
 
@@ -149,13 +151,15 @@ function scoreBoardInnerHTML() {
 
 //ф-ция для того чтоб запустить игру 
 function start() {
-do {var speedXNotNull= randomDiap(-8, 8)*2;
-var speedYNotNull= randomDiap(-5, 5)*2;}
-while(speedXNotNull==0||speedYNotNull==0);
+	do {
+		var speedXNotNull = randomDiap(-8, 8) * 2;
+		var speedYNotNull = randomDiap(-5, 5) * 2;
+	}
+	while (speedXNotNull == 0 || speedYNotNull == 0);
 	ballOptions.speedX = speedXNotNull;
 	ballOptions.speedY = speedYNotNull;
-	ballOptions.posX = tennisTag.getBoundingClientRect().left + tennisTag.getBoundingClientRect().width / 2 - ball.getBoundingClientRect().width / 2;
-	ballOptions.posY = tennisTag.getBoundingClientRect().top + tennisTag.getBoundingClientRect().height / 2 - ball.getBoundingClientRect().height / 2
+	ballOptions.posX = positionTenniTagLeft + positionTennisTagWidth / 2 - ball.getBoundingClientRect().width / 2;
+	ballOptions.posY = tennisTag.getBoundingClientRect().top + positionTennisTagHeight / 2 - ball.getBoundingClientRect().height / 2
 
 	// получение целого случайного числа в заданном диапазоне
 	function randomDiap(n, m) {
@@ -195,37 +199,39 @@ function tick() {
 	// вылетел ли мяч правее стены?
 	if ((ballOptions.posY + ballOptions.height < racketOption.racquet_2PosY
 		|| ballOptions.posY > (racketOption.racquet_2PosY + racketOption.height))
-		&& ballOptions.posX + ballOptions.width >= (tennisTag.getBoundingClientRect().left + tennisTag.getBoundingClientRect().width)) {
+		&& ballOptions.posX + ballOptions.width >= (positionTenniTagLeft + positionTennisTagWidth)) {
 
 		scorePlayer1 += 1;
 		scoreBoardInnerHTML();
 		ballOptions.speedX = 0;
 		ballOptions.speedY = 0;
 
-		ballOptions.posX = tennisTag.getBoundingClientRect().left + tennisTag.getBoundingClientRect().width - ballOptions.width - 1;
+		ballOptions.posX = positionTenniTagLeft + positionTennisTagWidth - ballOptions.width - 1;
 
 
 	} else if (!(ballOptions.posY + ballOptions.height < racketOption.racquet_2PosY || ballOptions.posY > (racketOption.racquet_2PosY + racketOption.height)) && ballOptions.posX + ballOptions.width > (racketOption.racquet_2PosX)) {
 		ballOptions.speedX = - ballOptions.speedX;
-		ballOptions.posX = tennisTag.getBoundingClientRect().left + tennisTag.getBoundingClientRect().width - racketOption.width - ballOptions.width;
+		ballOptions.posX = positionTenniTagLeft + positionTennisTagWidth - racketOption.width - ballOptions.width;
 	}
 
 	// вылетел ли мяч левее стены
 	if ((ballOptions.posY + ballOptions.height < racketOption.racquet_1PosY
 		|| ballOptions.posY > (racketOption.racquet_1PosY + racketOption.height))
-		&& ballOptions.posX <= (tennisTag.getBoundingClientRect().left)) {
+		&& ballOptions.posX <= (positionTenniTagLeft)) {
 
 		scorePlayer2 += 1;
 		scoreBoardInnerHTML();
 		ballOptions.speedX = 0;
 		ballOptions.speedY = 0;
 
-		ballOptions.posX = tennisTag.getBoundingClientRect().left + 1;
+		ballOptions.posX = positionTenniTagLeft + 1;
 
 
-	} else if (!(ballOptions.posY + ballOptions.height < racketOption.racquet_1PosY || ballOptions.posY > (racketOption.racquet_1PosY + racketOption.height)) && ballOptions.posX < (racketOption.width + racketOption.racquet_1PosX)) {
+	} else if (!(ballOptions.posY + ballOptions.height < racketOption.racquet_1PosY
+		|| ballOptions.posY > (racketOption.racquet_1PosY + racketOption.height))
+		&& ballOptions.posX < (racketOption.width + racketOption.racquet_1PosX)) {
 		ballOptions.speedX = - ballOptions.speedX;
-		ballOptions.posX = tennisTag.getBoundingClientRect().left + racketOption.width;
+		ballOptions.posX = positionTenniTagLeft + racketOption.width;
 	}
 
 	ballOptions.posY -= ballOptions.speedY;

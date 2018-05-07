@@ -6,7 +6,7 @@ body {
 #tennisGame {
 	margin: 0px auto;
 	border: 1px solid black;
-	background-color: #F0EE7E;
+	background-color: #f1ef7f;
 }
 
 .buttonStart {
@@ -28,14 +28,14 @@ body {
 	width: 10px;
 	height: 100px;
 	position: absolute;
-	background-color: #09AA57;
+	background-color: #02ab56;
 }
 
 .racquet_2 {
 	width: 10px;
 	height: 100px;
 	position: absolute;
-	background-color: #191497;
+	background-color: #120c98;
 
 }
 
@@ -44,5 +44,5 @@ body {
 	height: 30px;
 	position: absolute;
 	border-radius: 15px;
-	background-color: #F02137;
+	background-color: #f11c34;
 }

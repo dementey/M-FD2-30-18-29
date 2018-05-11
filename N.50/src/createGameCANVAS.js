@@ -20,8 +20,7 @@ function createCANVAS() {
 	var racket_1BgColor = '#02ab56';//цвет 1-ой ракетки
 	var racket_2BgColor = '#120c98';//цвет 2-ой ракетки
 	var ballColor = '#f11c34';//цвет мяча
-	var positionTop = 0;//т.к. и мяч и ракетки будут внутри тега CANVAS, то для них своя 
-						//относительная система кординат, смещений относительно document не будет
+	var positionTop = 0;//т.к. и мяч и ракетки будут внутри тега CANVAS, то для них своя относительная система кординат, смещений относительно document не будет
 	var positionLeft = 0;
 	var positionHeight = fieldHeight;
 	var positionWidth = fieldWidth;

@@ -1,0 +1,11 @@
+#qrcode {
+    float: left;
+}
+
+.info {
+    font-size: 12px;
+    font-family: sans-serif;
+    float: left;
+    padding-left: 20px;
+    width: 300px;
+}

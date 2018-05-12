@@ -1,0 +1,12 @@
+{
+    "grid":[
+        "t       t",
+        "t       t",
+        "m M p M m",
+        "mmmmmmmmm"
+    ],
+    "last":true,
+    "specialText":[
+        ["PROGRAM","BY"],["REED","PHILLIPS"],["ARTWORK","BY"],["EMMA","HERZOG"]
+    ]
+}

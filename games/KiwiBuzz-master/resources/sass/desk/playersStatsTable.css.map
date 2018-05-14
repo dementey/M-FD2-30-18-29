@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AACE,qBAAO;EACL,KAAK,EAAE,GAAG;EACV,MAAM,EAAE,GAAG;EACX,aAAa,EAAE,GAAG;EAClB,OAAO,EAAE,YAAY",
+"sources": ["playersStatsTable.scss"],
+"names": [],
+"file": "playersStatsTable.css"
+}

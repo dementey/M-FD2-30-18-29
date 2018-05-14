@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Name of the Game -->
+        <title>Dropper</title>
+        <!-- Sets the width of page to width of device -->
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!-- Sets the height of page to height of device -->
+        <!--Sets orientation of page to a portrait -->
+        <meta name="viewport" orientation="portrait"/>
+        <!-- Stylesheet for Opening Page -->
+        <link rel="stylesheet" href="infiniti.css">
+        <!-- Interactive Functions for Opening Page -->
+        <script src="infiniti.js"></script>
+        <!-- Makes interactive quality of page compatible with phonegap-->
+        <script type="text/javascript" src="phonegap.js"></script>
+    </head>
+    <body>
+        <div class="header">
+            <div class="container">
+                <p class="left">High Score: 0</p>
+				<div class="infinity"></div>
+                <p id="score" class="right">Score: 0</p>
+            </div>
+        </div>
+        <div>
+			<canvas id="firstCan" class="firstCanvas"></canvas>
+			<canvas id="redCan" class ="redCanvas"></canvas>
+			<canvas id="blueCan" class="blueCanvas"></canvas>
+			<canvas id="greenCan" class ="greenCanvas"></canvas>
+			<canvas id="yellowCan" class="yellowCanvas"></canvas>
+			<canvas id="secondCan" class ="secondCanvas"></canvas>
+		</div>
+    </body>
+</html>

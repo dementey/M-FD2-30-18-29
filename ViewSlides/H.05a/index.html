@@ -1,0 +1,30 @@
+<input type=button value='resize' onclick="resize()">
+<br /><br />
+<div id=Container style='background-color: yellow; height: 100px'>
+    <div>00</div> <div>01</div> <div>02</div> <div>03</div>
+    <div>04</div> <div>05</div> <div>06</div> <div>07</div>
+    <div>08</div> <div>09</div> <div>10</div> <div>11</div>
+    <div>12</div> <div>13</div> <div>14</div> <div>15</div>
+</div>
+
+<style>
+    #Container div { display: inline-block; background-color: red; }
+</style>
+
+<script>
+
+    "use strict";
+
+    function resize() {
+        var containerElem=document.getElementById('Container');
+        console.log(containerElem);
+        var divs=containerElem.getElementsByTagName('div');
+        console.log(divs);
+        console.time('TTT');
+        for ( var i=0; i<divs.length; i++ )
+            {divs[i].style.height=containerElem.offsetHeight/2+'px';
+            console.log(containerElem.offsetHeight);}
+        console.timeEnd('TTT');
+    }
+
+</script>

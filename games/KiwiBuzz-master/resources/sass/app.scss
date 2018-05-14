@@ -1,0 +1,25 @@
+// The following two lines import the default Sencha Touch theme. If you are building
+// a new theme, remove them and the add your own CSS on top of the base CSS (which
+// is already included in your app.json file).
+@import 'sencha-touch/default';
+@import 'sencha-touch/default/all';
+
+@import "desk/desk";
+@import "desk/taskCard";
+@import "desk/board";
+@import "desk/boardComponents/field";
+@import "desk/boardComponents/avatar";
+@import "newGameView";
+@import "startScreen/countSelector";
+@import "desk/playersStatsTable";
+@import "desk/dice";
+
+.circle{
+  width: 25px;
+  border-radius: 50%;
+
+}
+// Custom code goes here..
+
+// Examples of using the icon mixin:
+// @include icon('user');

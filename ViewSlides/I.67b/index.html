@@ -1,0 +1,35 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+
+<body>
+    <script>
+
+        "use strict";
+        
+        var friend={ gender:'муж', age:25 };
+        
+        (function(){
+            var shadowFio;
+            Object.defineProperty(friend, 'fio', {
+                get: function() { return shadowFio }, 
+                set: function(newVal) { shadowFio=newVal; friendChanged(); console.log(newVal+'!!!!!');}
+            }
+            
+        );
+        })();
+        
+        function friendChanged() {
+            console.log('обнаружено, что друг изменился: фио=' + friend.fio + ' пол=' + friend.gender);
+        }
+        
+        console.log('вношу изменения...');
+        friend.fio='Иванов Петя';
+        friend.gender='мужской';
+        console.log('изменения внесены: фио=' + friend.fio + ' пол=' + friend.gender);
+        console.log(friend);
+        </script> 
+</body>

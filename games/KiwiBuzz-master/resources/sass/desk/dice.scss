@@ -1,0 +1,11 @@
+.dice{
+  width: 3em;
+  height: 3em;
+  background-color: brown;
+  font-size: 2em;
+
+  .diceField{
+    text-align: center;
+    line-height: 2em;
+  }
+}

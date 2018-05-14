@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Name of the Game -->
+        <title>Dropper</title>
+        <!-- Sets the width of page to width of device -->
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!-- Sets the height of page to height of device -->
+        <meta name="viewport" content="height=device-height, initial-scale=1"/>
+        <!--Sets orientation of page to a portrait -->
+        <meta name="viewport" orientation="portrait"/>
+        <!-- Stylesheet for Opening Page -->
+        <link rel="stylesheet" href="index.css">
+        <!-- Interactive Functions for Opening Page -->
+        <script src="index.js"></script>
+        <!-- Makes interactive quality of page compatible with phonegap-->
+        <script type="text/javascript" src="phonegap.js"></script>
+    </head>
+    <body>
+        <div class="header">
+            <div class="container">
+                <p class="left">High Score: 0</p>
+					<div class="infinity"></div>
+                <p class="right">Plays: 0</p>
+            </div>
+        </div>
+        <center>
+        <div class="buttonplay" onclick="play()">
+            <div class="play"></div>
+        </div>
+        </center>
+        <div class="buttonleader">
+            <div class="bonus"></div>
+        </div>
+    </body>
+</html>

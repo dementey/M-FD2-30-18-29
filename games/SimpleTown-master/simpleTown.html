@@ -1,0 +1,40 @@
+<html>
+	<head>
+		<style type="text/css">
+			.item{
+				position: absolute;
+			}
+		</style>
+		<script type="text/javascript" src="knockout-2.2.1.debug.js"></script>
+		<script type="text/javascript" src="underscore.js"></script>
+		<script type="text/javascript" src="postal.js"></script>
+		<script type="text/javascript" src="createBusses.js"></script>
+		<script type="text/javascript" src="model.js"></script>
+		<script type="text/javascript" src="viewModels.js"></script>
+	</head>
+	<body>
+
+		<div style="height:100%; width:100%" id="main" data-bind="click: clicked">
+			<div data-bind="foreach: items">
+				<div class="item" data-bind="style:{left:left,top:top}">
+					<img  data-bind="attr:{src:imageUrl}"></img>
+				</div>
+			</div>	
+
+			
+		</div>		
+	</body>
+
+	<script type="text/javascript">
+		
+		var world = new model.World();
+		
+		ko.applyBindings(rootVm);
+
+		modelChannel.subscribe("#",function(message,envolope){
+			console.log(JSON.stringify(message) + ", " + JSON.stringify(envolope));
+		})
+
+		//setInterval(function(){gameChannel.publish("game.tick")},1000/gameFps);
+	</script>
+</html>

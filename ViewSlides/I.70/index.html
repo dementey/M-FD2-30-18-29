@@ -1,0 +1,38 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+
+<body>
+    <!-- View -->
+    Имя друга:
+    <span id='IFriendNameSpan'></span>
+    <br />
+
+    <script>
+
+        "use strict";
+
+        // Model
+        var friend = {};
+
+        Object.defineProperty(friend, 'fio', {
+            set: function (newVal) { this._shadowFio = newVal; friendDataChanged(); },
+            get: function () { return this._shadowFio },
+            configurable: true
+        }
+        );
+
+        function friendDataChanged() { // изменилась Model
+            // переносим во View
+            document.getElementById('IFriendNameSpan').innerHTML = friend.fio;
+        }
+
+        // вносим изменение в Model
+        friend.fio = 'Иванов Петя';
+// оно автоматически отображается в View
+
+    </script>
+</body>

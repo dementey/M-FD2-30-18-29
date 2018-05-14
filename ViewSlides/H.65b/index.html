@@ -1,0 +1,39 @@
+<audio id=ZVUK preload controls>
+    <source src="http://htmlbook.ru/example/audio/music.ogg" type="audio/ogg; codecs=vorbis">
+    <source src="http://htmlbook.ru/example/audio/music.mp3" type="audio/mpeg">
+</audio>
+
+<br />
+<input type=button value='играть' onclick='zvukPlay()'>
+<input type=button value='пауза' onclick='zvukPause()'>
+<input type=button value='в начало' onclick='zvukRestart()'> &nbsp;&nbsp;
+<input type=button value='тихо' onclick='zvukVolumeHalf()'>
+<input type=button value='громко' onclick='zvukVolumeFull()'>
+
+<script>
+
+    "use strict";
+
+    var zvukElem = document.getElementById('ZVUK');
+    console.log(zvukElem);
+    function zvukPlay() {
+        zvukElem.play();
+    }
+
+    function zvukPause() {
+        zvukElem.pause();
+    }
+
+    function zvukRestart() {
+        zvukElem.currentTime = 0; // в секундах
+    }
+
+    function zvukVolumeHalf() {
+        zvukElem.volume = 0.5;
+    }
+
+    function zvukVolumeFull() {
+        zvukElem.volume = 1;
+    }
+
+</script>

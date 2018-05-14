@@ -1,0 +1,12 @@
+.playersStats{
+  z-index: 1;
+  .avatarColor{
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    display: inline-block;
+    z-index: 1;
+    margin-right: 0.5em;
+    margin-bottom: -0.5em;
+  }
+}

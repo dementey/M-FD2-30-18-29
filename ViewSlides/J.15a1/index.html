@@ -1,0 +1,37 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+
+<body>
+    <input type=button onclick='testLoadData()' value='загрузить текст'>
+
+<script src='http://fe.it-academy.by/JQ/jquery.js'></script>
+
+<script>
+
+    "use strict";
+
+    function testLoadData() {
+        $.ajax("http://fe.it-academy.by/Examples/test.txt",
+            { type:'GET', dataType:'text', success:dataLoaded, error:errorHandler }
+        );
+        console.log(data);
+    }
+
+    function dataLoaded(data) {
+        console.log('загруженные через AJAX данные:');
+        console.log(data);
+
+        // test.txt набран в Linux-среде, переводы строк - \n, всё отлично
+        alert(data);
+    }
+
+    function errorHandler(jqXHR,statusStr,errorStr) {
+        alert(statusStr+' '+errorStr);
+    }
+
+</script>
+</body>

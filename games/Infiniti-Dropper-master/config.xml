@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" versionCode = "10" version = "0.9.1">
+    <name>Infiniti Dropper</name>
+    <author email="dvon.k.jackson@gmail.com">
+       D'von Jackson
+    </author>
+    <preference name="phonegap-version" value="3.7.0" />
+    <preference name="target-device" value="universal" />
+    <preference name="fullscreen" value="true" />
+    <preference name="webviewbounce" value="true" />
+    <preference name="stay-in-webview" value="false" />
+    <preference name="ios-statusbarstyle" value="black-opaque" />
+    <preference name="detect-data-types" value="true" />
+    <preference name="exit-on-suspend" value="false" />
+    <preference name="android-minSdkVersion" value="7" />
+    <preference name="android-installLocation" value="auto" />
+    <description>A phone/tablet game where colored balls drop from the top. The user shoots the ball with the appropriate color from either the left or right. If the ball reaches the bottom or is shot by the wrong color then the game is over.</description>
+    
+<gap:plugin name="org.apache.cordova.core.device" version="0.2.12" />
+<gap:plugin name="org.apache.cordova.media" version="0.2.13" />
+
+</widget>

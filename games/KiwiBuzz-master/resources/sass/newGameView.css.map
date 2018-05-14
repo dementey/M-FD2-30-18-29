@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,YAAY;EACV,gBAAgB,EAAE,GAAG;EACrB,uBAAU;IACR,OAAO,EAAE,KAAK;IACd,WAAW,EAAE,IAAI;IACjB,YAAY,EAAE,IAAI;IAClB,UAAU,EAAE,GAAG",
+"sources": ["newGameView.scss"],
+"names": [],
+"file": "newGameView.css"
+}

@@ -1,1 +1,0 @@
-var UIChannel = postal.channel();

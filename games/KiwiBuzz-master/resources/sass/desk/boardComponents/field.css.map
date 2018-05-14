@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,MAAM;EACJ,MAAM,EAAE,GAAG;EACX,KAAK,EAAE,GAAG;EACV,aAAa,EAAE,GAAG;EAClB,gBAAgB,EAAE,OAAO;EACzB,MAAM,EAAC,eAAe",
-"sources": ["field.scss"],
-"names": [],
-"file": "field.css"
-}

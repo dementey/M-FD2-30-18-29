@@ -10,9 +10,22 @@ var masterList = []
 var presentScore = 0
 var highScore = 0
 
+var ww = window,
+	dd = document,
+	ee = dd.documentElement,
+	gg = dd.getElementsByTagName('body')[0],
+	xx = ww.innerWidth || ee.clientWidth || gg.clientWidth,
+	yy = ww.innerHeight || ee.clientHeight || gg.clientHeight;
+console.log(xx + ' × ' + yy);
 
 var c = document.getElementById("canvas1");
+//c.style.width = xx + 'px';
+//c.style.hight = yy + 'px';
 var ctx = c.getContext("2d");
+//var w = xx-10;
+//var h = yy-10;
+
+
 var w = ctx.canvas.clientWidth;
 var h = ctx.canvas.clientHeight;
 
@@ -54,11 +67,11 @@ function Circle(radius) {
 
 	this.bounding = function () {
 		if ((this.x + this.radius + this.dx) > w || this.x + this.dx < this.radius) {
-		this.dx = -this.dx;
+			this.dx = -this.dx;
 			if (this.type == "player") { this.life -= 1; }
 		}
 		if ((this.y + this.radius + this.dy) > h || this.y + this.dy < this.radius) {
-		this.dy = -this.dy;
+			this.dy = -this.dy;
 			if (this.type == "player") { this.life -= 1; }
 		}
 
@@ -358,7 +371,7 @@ function collisionCheck(circleInput, player) {
 		c = circleInput[k];
 
 		if (collision(c.x, c.y, c.radius, player.x, player.y, player.radius)) {
-		player.hits += 1;
+			player.hits += 1;
 
 			if (c.type == "snowFlake" || c.type == "present") { c.alive = false }
 		}
@@ -403,3 +416,37 @@ function gameOver() {
 
 
 }
+
+// подписываемся на вжатие клавиш
+window.addEventListener('keydown', function (EO) {
+	EO = EO || window.event;
+	if (EO.keyCode === 37) {//курсор <
+		ipx-= 10;
+	}
+	if (EO.keyCode === 38) {//курсор ^	
+		ipy-= 10;
+	}
+	if (EO.keyCode === 39) {//курсор >
+		ipx+= 10;
+	}
+	if (EO.keyCode === 40) {//курсор v
+		ipy+= 10;
+	}
+});
+
+// подписываемся на отпускание клавиш
+window.addEventListener('keyup', function (EO) {
+	EO = EO || window.event;
+	if (EO.keyCode === 37) {//курсор <
+		ipx= 0;
+	}
+	if (EO.keyCode === 38) {//курсор ^	
+		ipy= 0;
+	}
+	if (EO.keyCode === 39) {//курсор >
+		ipx= 0;
+	}
+	if (EO.keyCode === 40) {//курсор v
+		ipy= 0;
+	}
+});

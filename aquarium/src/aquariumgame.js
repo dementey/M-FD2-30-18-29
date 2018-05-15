@@ -139,7 +139,7 @@ Player.prototype = new Circle();
 Player.prototype.move = function () {
 
 
-	this.x -= ipx / 20
+	this.x += ipx / 20
 	this.y += ipy / 20
 
 }

@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<script src="http://fe.it-academy.by/JQ/jquery.js"></script>
+</head>
+<body>
+
+<style>
+*{
+padding: 0;
+margin: 0;
+}
+html,body{
+    height: 100%;
+	width: 100%;
+}
+body{
+    background: black;
+	font-family: monospace; 
+}
+
+#namesubmit{
+	height: 40px;
+	cursor: pointer;
+	font-size:30px; 
+	border: 1px solid #aaff00;
+	background: black; 
+	color: #aaff00;
+	font-family: monospace; 
+	font-weight: bold;
+	position: absolute; 
+	width: 7%;
+	margin-left: 55%;
+	text-align: center;
+}
+
+#nameinput{
+	height: 40px;
+	font-size:30px; 
+	border: 1px solid #aaff00;
+	background: black; 
+	color: #aaff00;
+	font-family: monospace; 
+	font-weight: bold;
+	position: absolute; 
+	width: 18%;
+	margin-left: 37%;
+	text-align: center;
+}
+
+#entername{
+	width: 25%;
+	margin: 10px;
+	margin-left: 37%; 
+	display: block;
+}
+
+@media screen and (max-width: 1200px){
+
+	
+
+	#namesubmit{		
+		margin-left: 63%;		
+	}
+
+	#entername,
+	#nameinput{
+		width: 40%;
+		margin-left: 30%;
+	}
+
+}
+
+@media screen and (max-width: 800px){
+
+	#namesubmit{
+		
+		margin-left: 70%;
+		width: 12%;
+	}
+
+	#entername,
+	#nameinput{
+		width: 60%;
+		margin-left: 20%;
+	}
+
+}
+
+#scoretable{
+	display: table;
+	text-align: center;
+	vertical-align: middle;
+	width: 100%;
+	height: 100%;
+	color: #009900;
+	
+}
+
+#scorerow{
+	display: table-row;
+	width: 100%;
+	height: 100%;
+}
+
+#scorecell{
+	display: table-cell;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 2em;
+}
+
+#scorebutton{
+	margin: 20px;
+	background-color: #009900;
+	color: black;
+	border: 3px double #009900;
+	padding: 5px 20px;
+}
+
+</style>
+
+<audio autoplay loop preload src="http://fe.it-academy.by/Projects/Makarenko/videoplayback.mp3"></audio>
+<audio>
+ <source src="http://fe.it-academy.by/Projects/Makarenko/videoplayback.mp3">
+</audio>
+
+
+
+
+
+
+<script>
+
+/*---------------START SCREEN-------------------*/
+
+
+
+splashScreen()
+function splashScreen(){
+
+var logoscreen = document.createElement('div');
+logoscreen.style.cssText = 'width: 100%; height: 100%;';
+logoscreen.id = 'startscreen'
+document.body.appendChild(logoscreen);
+
+var logo = document.createElement('img');
+logo.src = "images/logo.png"
+logo.style.cssText = 'width: 60%; margin-left: 25%;';
+logoscreen.appendChild(logo);
+
+var nameform = document.createElement('div');
+nameform.id = 'nameform';
+nameform.style.display = 'none';
+nameform.style.cssText = ''
+logoscreen.appendChild(nameform);
+
+var entername = document.createElement('img');
+entername.id = 'entername'
+entername.src = 'images/entername.png'
+nameform.appendChild(entername);
+
+var nameinput = document.createElement('input');
+nameinput.id = 'nameinput';
+if(localStorage.getItem('ajname') !== null){nameinput.placeholder = localStorage.getItem('ajname')} else {nameinput.placeholder = 'Player1'};
+nameinput.type = 'text'
+nameinput.name = 'nameinput'
+nameinput.maxLength = 10
+nameform.appendChild(nameinput);
+
+var namesubmit = document.createElement('div');
+namesubmit.id = 'namesubmit'
+namesubmit.innerHTML = 'GO'
+
+
+namesubmit.onclick = function(){
+	nameinput.value ? localStorage.setItem('ajname', nameinput.value) : localStorage.setItem('ajname',nameinput.placeholder);
+	document.getElementById('startscreen').style.display = 'none';
+	gameOn();
+}
+nameform.appendChild(namesubmit);
+           
+}
+
+
+
+
+/*---------------GAME ON-------------------*/
+
+function gameOn(){
+
+var canvas = document.createElement('canvas');
+canvas.id     = "CursorLayer";
+canvas.width  = document.body.clientWidth;
+canvas.height = document.body.clientHeight;
+canvas.style.position = "absolute";
+document.body.appendChild(canvas);
+
+var context = canvas.getContext('2d');
+
+function randColor(){
+    return '#' + Math.round(Math.random() * 0xFFFFFF).toString(16);
+}
+
+function randomFloat (min, max)
+{
+	return min + Math.random()*(max-min);
+}
+
+window.onresize = function(){
+canvas.width  = document.body.clientWidth;
+canvas.height = document.body.clientHeight;
+}
+
+
+/*---------------STARS ON BACKGROUND-------------------*/
+
+var particles = [];
+
+function Particle(){
+    this.x = Math.random()*canvas.width;
+    this.y = Math.random()*canvas.height;
+    this.speed = Math.random()*2+.5;
+    this.color = randColor();
+    this.size = Math.random()*5+1;
+    this.amp = Math.random()*-5+10;
+}
+
+var particle_count = canvas.width/20;
+
+for(var i = 0; i<particle_count; i++){
+    var p = new Particle;
+    particles.push(p)
+}
+
+
+
+/*---------------GAME CONTROLS-------------------*/
+
+var keys = [];
+
+document.body.addEventListener('touchstart', function(e){
+    ship.x = e.touches[0].pageX;	
+		
+		
+	if(e.touches[1]){
+		shoot();
+	}
+		
+	if(e.touches[2]){
+		if(bombs.length > 0 || bombcount == 0){return}
+		bombcount--;
+		var bomb = new SmartBomb();
+		bombs.push(bomb);
+		var snd = new Audio("http://fe.it-academy.by/Projects/Makarenko/smartbomb.wav");
+		snd.play();
+	}
+	e.preventDefault();
+}, false)
+
+document.body.addEventListener('touchmove', function(e){
+	ship.x = e.touches[0].pageX;
+	ship.y = e.touches[0].pageY;
+	e.preventDefault();		
+}, false)
+
+
+
+document.body.addEventListener("mousemove", function (e) {
+    ship.x = e.clientX;
+    ship.y = e.clientY;
+});
+
+document.body.addEventListener("click", function (e) {
+    shoot()
+});
+
+document.body.addEventListener("keydown", function (e) {
+    keys[e.keyCode] = true;
+});
+
+document.body.addEventListener("keyup", function (e) {
+    keys[e.keyCode] = false;
+});
+
+setInterval(function(){
+
+if (keys[38] || keys[87]) {
+    ship.y -= ship.a
+}
+
+if (keys[40] || keys[83]) {
+    ship.y += ship.a
+}
+if (keys[39] || keys[68]) {
+    ship.x += ship.a
+}
+if (keys[37] || keys[65]) {
+    ship.x -= ship.a
+}
+
+if (keys[32]) {
+    shoot()
+}
+
+if (keys[16]){
+	if(bombs.length>0 || bombcount == 0){return}
+	bombcount--;
+	var bomb = new SmartBomb();
+  	bombs.push(bomb);
+  window.navigator.vibrate([300,100,200,100,100]);
+	var snd = new Audio("http://fe.it-academy.by/Projects/Makarenko/smartbomb.wav");
+	snd.play();
+}
+
+
+if(ship.x > canvas.width){
+    ship.x = canvas.width
+}
+if(ship.x < 0){
+    ship.x = 0
+}
+
+if(ship.y < 50){
+    ship.y = 50
+}
+if(ship.y > canvas.height - 50){
+    ship.y = canvas.height - 50
+}
+
+},20)
+
+
+
+/*---------------EXPLOSIONS-------------------*/
+
+var blasts = [];
+
+function Blast(){
+	this.scale = Math.random()*5+1;
+	this.x = 0;
+	this.y = 0;
+	this.radius = canvas.height/50;
+	this.color = "#FFFFFF";	
+	this.velocityX = 0;
+	this.velocityY = 0;
+	this.scaleSpeed = 0.5;
+		
+	this.update = function(ms)
+	{		
+		this.scale -= this.scaleSpeed * ms / 500.0;
+		
+		if (this.scale <= 0)
+		{
+			this.scale = 0;
+		}
+				
+		this.x += this.velocityX * ms/200.0;
+		this.y += this.velocityY * ms/200.0;	
+	};
+	
+	this.draw = function()
+	{		
+		context.save();
+		context.translate(this.x, this.y);
+		context.scale(this.scale, this.scale);		
+		context.beginPath();
+		context.arc(0, 0, this.radius, 0, Math.PI*2, true);
+		context.closePath();
+		context.fillStyle = this.color;
+		context.fill();
+		context.restore();
+	};
+}
+
+function createExplosion(x, y, color)
+{
+	var minSize = canvas.height/200;
+	var maxSize = canvas.height/100;
+	var count = 20;
+	var minSpeed = 60.0;
+	var maxSpeed = 100.0;
+	var minScaleSpeed = 2.0;
+	var maxScaleSpeed = 5.0;
+
+	for (var angle=0; angle<360; angle += Math.round(360/count))
+	{
+		var blast = new Blast();
+		blast.x = x;
+		blast.y = y;
+		blast.radius = randomFloat(minSize, maxSize);
+		blast.color = color;
+		blast.scaleSpeed = randomFloat(minScaleSpeed, maxScaleSpeed);
+		var speed = randomFloat(minSpeed, maxSpeed);
+		blast.velocityX = speed * Math.cos(angle * Math.PI / 180.0);
+		blast.velocityY = speed * Math.sin(angle * Math.PI / 180.0);
+		blasts.push(blast);
+	}
+}
+
+function killSpaceman(x, y, color)
+{
+	var minSize = canvas.height/400;
+	var maxSize = canvas.height/300;
+	var count = 20;
+	var minSpeed = 20.0;
+	var maxSpeed = 30.0;
+	var minScaleSpeed = 2.0;
+	var maxScaleSpeed = 5.0;
+
+	for (var angle=0; angle<360; angle += Math.round(360/count))
+	{
+		var blast = new Blast();
+		blast.x = x;
+		blast.y = y;
+		blast.radius = randomFloat(minSize, maxSize);
+		blast.color = color;
+		blast.scaleSpeed = randomFloat(minScaleSpeed, maxScaleSpeed);
+		var speed = randomFloat(minSpeed, maxSpeed);
+		blast.velocityX = speed * Math.cos(angle * Math.PI / 180.0);
+		blast.velocityY = speed * Math.sin(angle * Math.PI / 180.0);
+		blasts.push(blast);
+	}
+}
+
+/*---------------SHOOTING BULLETS-------------------*/
+
+var bullets = [];
+
+function shoot(){
+    if (bullets.length>0){
+	return;
+	} else {
+	var bullet = new Bullet;
+    bullets.push(bullet);
+	var laser = new Audio("http://fe.it-academy.by/Projects/Makarenko/laser2.wav");
+	laser.play();
+	}
+}
+
+function Bullet(){
+    this.x = ship.x;
+    this.y = ship.y - 40;
+    this.speed = 10;	
+    this.color = "#666"
+    this.a = ship.a;	
+}
+
+/*---------------JUNK-------------------*/
+
+var junkCounter = 5;
+setInterval(function(){junkCounter++},5000)
+
+var junkimages = ['junk1.png','junk2.png','junk3.png','junk4.png','junk5.png','junk6.png','junk7.png','junk8.png','junk9.png','junk10.png','junk11.png','junk12.png']
+
+var junks = [];
+
+function Junk(){
+	this.x = Math.random()*(canvas.width*.8)+canvas.width/10;
+	this.y = -100;
+	this.dx = 0;
+    this.dy = Math.random()+1;
+	this.a = 10;	
+	this.src = 'images/' + junkimages[Math.floor(randomFloat(0,junkimages.length))]
+	this.angle = Math.random()*720-360
+	this.rotate = Math.floor(Math.random()*100)
+	
+	var junkimg = new Image();
+		junkimg.src = this.src;		
+	
+	
+	this.draw = function(){
+		context.save();	
+		context.translate(this.x+junkimg.width/2,this.y+junkimg.height/2)
+		context.rotate(this.angle*Math.PI/180)
+		context.translate(-(this.x+junkimg.width/2),-(this.y+junkimg.height/2))
+		context.drawImage(junkimg,this.x,this.y,canvas.height/10,canvas.height/10);
+		context.restore();
+	}
+	this.update = function(){
+		if(this.rotate%2 == 0)
+		{this.angle += this.dy/3} else {this.angle -= this.dy/3}
+		
+		this.x += this.dx
+		this.y += this.dy
+		
+	}
+}
+
+var junkSpawn = setInterval(function(){
+    if (junks.length > junkCounter) return;
+	var junk = new Junk;
+    junks.push(junk)
+},500)
+
+/*---------------HEALTH-UP-------------------*/
+
+var lives = 3;
+
+var heart = new Image();
+heart.src='images/heart.png';
+
+function drawLives(){
+	for(var i = 0;i<lives; i++){
+		context.drawImage(heart,canvas.width-35,120+i*35,30,30);		
+	}
+}
+
+var spacemen = [];
+
+function Spaceman(){
+	this.x = canvas.width;
+	this.y = Math.random()*(canvas.height*.8)+canvas.height/10;;
+	this.dx = 1;
+	this.dy = 0;
+	this.a = canvas.height/100;
+	this.angle = Math.random()*720-360
+	var spaceman = new Image();
+	spaceman.src = 'images/spaceman.png'
+	
+	this.draw = function(){			
+		context.save();	
+		context.translate(this.x+spaceman.width/4,this.y+spaceman.height/4)
+		context.rotate(this.angle*Math.PI/180)
+		context.translate(-(this.x+spaceman.width/4),-(this.y+spaceman.height/4))
+		context.drawImage(spaceman,this.x,this.y,this.a*3,this.a*3);
+		context.restore();
+	}
+	this.update = function(){
+		this.angle++
+		
+		this.x -= this.dx;
+		this.y += this.dy;
+	}
+}
+
+var healthSpawn = setInterval(function(){
+    var spaceman = new Spaceman;
+    spacemen.push(spaceman)
+},30000)
+
+/*---------------SMARTBOMB-------------------*/
+var bombs = [];
+
+function SmartBomb(){
+	this.x = 0;
+	this.y = 0;
+	this.radius = 10;
+	this.opacity = 1;
+	
+	this.draw = function(x,y){
+		context.save();
+		context.beginPath();
+		context.globalAlpha = this.opacity;
+		context.fillStyle = randColor();
+		context.arc(x,y,this.radius,0,Math.PI*2);
+		context.fill();
+		context.closePath();
+		context.restore();
+	}
+	this.update = function(){
+		this.radius *= 1.1;
+		this.opacity *= .99
+	}
+}
+
+bombicons = [];
+
+function Bombicon(){
+	this.x = 0;
+	this.y = Math.random()*canvas.height/3 + canvas.height/3;
+	this.dx = 1;
+	this.dy = 0;
+	this.a = canvas.height/50;
+	this.wave = 0;
+	var bombicon = new Image();
+	bombicon.src = 'images/bombicon.png'
+	
+	this.draw = function(){			
+		context.save();			
+		context.drawImage(bombicon,this.x,this.y,this.a*3,this.a*3);
+		context.restore();
+	}
+	this.update = function(){
+		this.wave++;
+		
+		this.x += this.dx;
+		this.y += Math.sin(this.wave*Math.PI/180);
+	}
+}
+
+var bombSpawn = setInterval(function(){
+    var bicon = new Bombicon;
+    bombicons.push(bicon);
+},40000)
+
+
+/*---------------ASTEROIDS-------------------*/
+/*
+var asteroidsCounter = 2;
+setInterval(function(){asteroidsCounter++},5000)
+
+var asteroids = []
+
+function Asteroid(){
+    this.x = Math.random()*(canvas.width*.9)+canvas.width/10;
+    this.y = -50;
+    this.a = Math.round(Math.random()*10+10);
+    this.dx = 0
+    this.dy = Math.random()+1
+}
+
+var astSpawn = setInterval(function(){
+    if (asteroids.length > asteroidsCounter) return;
+	var ast = new Asteroid;
+    asteroids.push(ast)
+},2000)
+
+function drawAsteroid(x,y,a){
+    context.fillStyle = '#d6d6d6';
+    context.fillRect(x-5*a,y-a,9*a,3*a);
+    context.fillRect(x-4*a,y-2*a,7*a,a);
+    context.fillRect(x-3*a,y-3*a,6*a,a);
+    context.fillRect(x-a,y-4*a,3*a,a);
+    context.fillStyle = '#999';
+    context.fillRect(x-4*a,y+2*a,7*a,a);
+    context.fillRect(x-2*a,y+3*a,3*a,a);
+    context.fillRect(x-5*a,y+a,9*a,a);
+    context.fillRect(x-5*a,y,a,a);
+    context.fillRect(x-3*a,y,a,a);
+    context.fillRect(x-a,y,a,a);
+    context.fillRect(x+a,y,3*a,a);
+    context.fillRect(x+2*a,y-1*a,2*a,a);
+    context.fillRect(x+a,y-2*a,a,a);
+    context.fillRect(x,y-1*a,a,a);
+}
+*/
+/*---------------PLAYER SHIP-------------------*/
+
+var ship = {
+    x : canvas.width/2,
+    y : canvas.height*2/3,
+    a : canvas.height/200
+}
+
+function drawShip(x,y,a){
+    context.fillStyle = '#d6d6d6';
+    context.fillRect(x-7*a,y,15*a,3*a);
+    context.fillRect(x-6*a,y-1*a,13*a,a);
+    context.fillRect(x-5*a,y+3*a,11*a,a);
+    context.fillRect(x-3*a,y+4*a,7*a,a);
+    context.fillRect(x-5*a,y-2*a,a,a);
+    context.fillRect(x-2*a,y-2*a,a,a);
+    context.fillRect(x+5*a,y-2*a,a,a);
+    context.fillRect(x-1*a,y-6*a,a,a);
+    context.fillStyle = '#999';
+    context.fillRect(x,y-6*a,2*a,a);
+    context.fillRect(x-4*a,y-1*a,a,5*a);
+    context.fillRect(x+2*a,y-2*a,a,a);
+    context.fillRect(x,y-1*a,a,8*a);
+    context.fillRect(x+1*a,y-1*a,3*a,6*a);
+    context.fillRect(x+4*a,y-1*a,a,5*a);
+    context.fillRect(x+6*a,y-1*a,a,4*a);
+    context.fillRect(x+7*a,y,a,3*a);
+    context.fillRect(x+6*a,y,2*a,3*a);
+    context.fillRect(x,y-a,5*a,5*a);
+    context.fillStyle = '#333';
+    context.fillRect(x,y-5*a,2*a,4*a);
+    context.fillRect(x+2*a,y+2*a,a,2*a);
+    context.fillRect(x-1*a,y+5*a,a,a);
+    context.fillRect(x+1*a,y+5*a,a,a);
+    context.fillStyle = '#525252';
+    context.fillRect(x-1*a,y-5*a,a,4*a);
+    context.fillRect(x-2*a,y+2*a,a,2*a);
+    context.fillRect(x-5*a,y-3*a,a,a);
+    context.fillRect(x+5*a,y-3*a,a,a);
+    context.fillStyle = '#336699';
+    context.fillRect(x,y-3*a,a,3*a);
+    context.fillStyle = '#ff9900';
+    context.fillRect(x-3*a,y+1*a,a,a);
+    context.fillRect(x-2*a,y,a,a);
+    context.fillRect(x-1*a,y+1*a,a,a);
+    context.fillStyle = '#cc6633';
+    context.fillRect(x,y+1*a,2*a,a);
+    context.fillRect(x+2*a,y,a,a);
+    context.fillRect(x+3*a,y+1*a,a,a);
+  
+}
+
+/*---------------SCORES-------------------*/
+
+var score = 0;
+
+var earthlives = 100;
+
+var gameOverCheck = setInterval(function(){
+	if(earthlives<100){earthlives++};
+	if(earthlives<=0 || lives<=0){clearInterval(gameOverCheck);gameOver()};
+	if(earthlives>=100){earthlives=100};
+},300)
+
+function drawScores(score){
+	context.textAlign = 'left';
+	context.textBaseline = 'middle';
+	context.fillStyle = '#009900';
+	context.font='bold ' + canvas.width/25 + 'px monospace';
+	context.fillText(score,0,30);	
+}
+
+var earth=new Image();
+earth.src='images/earth.png';
+
+
+function drawEarth(){	
+  	context.drawImage(earth,0,0,100,100,canvas.width-100,0,100,100);     
+	context.drawImage(earth,100,100-earthlives,100,earthlives,canvas.width-100,100-earthlives,100,earthlives);
+}
+
+var bombcount = 3;
+
+var bombimg=new Image();
+bombimg.src='images/bomb.png';
+
+function drawBombs(){
+	for(var i = 0;i<bombcount; i++){
+		context.drawImage(bombimg,canvas.width-70,120+i*35,30,30);
+	}
+}
+
+/*---------------GAME OVER-------------------*/
+
+
+var scores = new String();
+
+function gameOver(){
+	scores += localStorage['ajname'] + (String('....................').substr(localStorage['ajname'].length)) + (String('00000000' + score).slice(-8));
+	
+	RestoreInfo();
+	
+	//var str = JSON.stringify({name:localStorage.getItem('ajname') , score : score});
+	//console.log(str);
+	
+	ship = null;
+	document.body.removeChild(canvas);
+	
+	var scoretable = document.createElement('div');	
+	scoretable.id = 'scoretable'	
+	document.body.appendChild(scoretable);
+	
+	var scorerow = document.createElement('div');
+	scorerow.id = 'scorerow'
+	scoretable.appendChild(scorerow);
+	
+	var scorecell = document.createElement('div');	
+	scorecell.id = 'scorecell'
+	scorecell.innerHTML = 'BEST PILOTS<br>' 
+	scorecell.innerHTML += scores;
+	scorerow.appendChild(scorecell);
+	
+	var scorebutton = document.createElement('button');
+	scorebutton.id = 'scorebutton'
+	scorebutton.innerHTML = 'PLAY AGAIN'
+	scorebutton.addEventListener('touchstart', function(e){window.location.reload()})
+	scorebutton.onclick = function(){window.location.reload()};
+	scoretable.appendChild(scorebutton);	
+	
+}
+
+/*---------------NETWORK-------------------*/
+
+
+var AjaxHandlerScript="http://fe.it-academy.by/AjaxStringStorage2.php";
+var UpdatePassword;
+
+function RestoreInfo()
+{
+    $.ajax(
+        {
+            url : AjaxHandlerScript, type : 'POST', cache : false,
+            data : { f : 'READ', n : 'Makarenko_astrojunk' },
+            success : ReadReady, error : ErrorHandler
+        }
+    );
+}
+
+function ReadReady(ResultH)
+{
+    if ( ResultH.error!=undefined )
+        alert(ResultH.error);
+    else if ( ResultH.result!="" )
+    {
+        var InfoH=JSON.parse(ResultH.result);
+        scorecell.innerHTML += InfoH
+    }
+}
+
+function StoreInfo()
+{
+    UpdatePassword=Math.random();
+    $.ajax(
+        {
+            url : AjaxHandlerScript, type : 'POST', cache : false,
+            data : { f : 'LOCKGET', n : 'Makarenko_astrojunk', p : UpdatePassword },
+            success : LockGetReady, error : ErrorHandler
+        }
+    );
+}
+
+function LockGetReady(ResultH)
+{
+    if ( ResultH.error!=undefined )
+        alert(ResultH.error);
+    else
+    {        
+        var InfoH=
+        {
+            name : 'ajname',
+            score : 123
+        };
+        $.ajax(
+            {
+                url : AjaxHandlerScript, type : 'POST', cache : false,
+                data : { f : 'UPDATE', n : 'Makarenko_astrojunk', v : JSON.stringify(InfoH), p : UpdatePassword },
+                success : UpdateReady, error : ErrorHandler
+            }
+        );
+    }
+}
+
+function UpdateReady(ResultH)
+{
+    if ( ResultH.error!=undefined )
+        alert(ResultH.error);
+}
+
+function ErrorHandler(jqXHR,StatusStr,ErrorStr)
+{
+    alert(StatusStr+' '+ErrorStr);
+}
+
+
+
+
+
+/*---------------DRAWING SCENE-------------------*/
+
+
+ var requestAnimationFrame = (function(){
+  return window.requestAnimationFrame
+   || window.webkitRequestAnimationFrame
+   || window.mozRequestAnimationFrame
+   || function (callback) {
+    window.setTimeout(callback, 1000 / 60);
+   };
+ })();
+
+draw();
+
+function draw(){
+
+	var scoreStr = localStorage.getItem('ajname') + ':' + (String('00000000' + score).slice(-8));
+	
+    context.clearRect(0,0,canvas.width,canvas.height);
+	drawEarth()
+	
+    for(var j = 0;j<bullets.length;j++){
+        context.save();
+		context.fillStyle = bullets[j].color;		
+		context.shadowColor = bullets[j].color;
+		context.shadowOffsetX = 0;
+		context.shadowOffsetY = 0;
+		context.shadowBlur = bullets[j].a;		
+        context.fillRect(bullets[j].x-bullets[j].a,bullets[j].y,bullets[j].a*3,7*bullets[j].a)		
+		context.save();
+		context.fillStyle = "#aaa";
+        context.fillRect(bullets[j].x-bullets[j].a,bullets[j].y,bullets[j].a*3,3*bullets[j].a)
+		context.restore();
+        context.fillRect(bullets[j].x,bullets[j].y+bullets[j].a*7,bullets[j].a,bullets[j].a)
+        context.fillRect(bullets[j].x+bullets[j].a,bullets[j].y+bullets[j].a*8,bullets[j].a,bullets[j].a)
+        context.fillRect(bullets[j].x-bullets[j].a,bullets[j].y+bullets[j].a*8,bullets[j].a,bullets[j].a)
+		
+		context.save();
+		context.fillStyle = "orange";
+		
+		
+		context.shadowBlur = 3*bullets[j].a;
+        context.fillRect(bullets[j].x,bullets[j].y+bullets[j].a,bullets[j].a,bullets[j].a)
+		context.restore();
+		
+		context.restore();
+		
+        bullets[j].y -= bullets[j].speed        
+/*		
+		for(var i=0;i<asteroids.length;i++){
+			if(bullets[j] && bullets[j].y < asteroids[i].y + 3*asteroids[i].a && bullets[j].y > asteroids[i].y - 3*asteroids[i].a){
+				if(bullets[j] && bullets[j].x < asteroids[i].x + 4*asteroids[i].a && bullets[j].x > asteroids[i].x - 4*asteroids[i].a){
+					createExplosion(asteroids[i].x, asteroids[i].y, '#555');
+					createExplosion(asteroids[i].x, asteroids[i].y, 'MAROON');			
+					createExplosion(asteroids[i].x, asteroids[i].y, 'orange');									
+					asteroids.splice(i,1);
+					bullets.splice(j,1);
+					var snd = new Audio("http://fe.it-academy.by/Projects/Makarenko/bomb.wav");
+					snd.play();
+					score++;
+					
+				}
+			}
+		}
+*/		
+		for(var i=0;i<junks.length;i++){
+			if(bullets[j] && bullets[j].y < junks[i].y + 9*junks[i].a && bullets[j].y > junks[i].y){
+				if(bullets[j] && bullets[j].x < junks[i].x + 9*junks[i].a && bullets[j].x > junks[i].x){
+					createExplosion(junks[i].x + 5*junks[i].a, junks[i].y + 5*junks[i].a, '#555');
+					createExplosion(junks[i].x + 5*junks[i].a, junks[i].y + 5*junks[i].a, 'MAROON');			
+					createExplosion(junks[i].x + 5*junks[i].a, junks[i].y + 5*junks[i].a, 'orange');									
+					junks.splice(i,1);
+					bullets.splice(j,1);
+					window.navigator.vibrate(200);
+					var snd = new Audio("http://fe.it-academy.by/Projects/Makarenko/bomb.wav");
+					snd.play();
+					score++;
+					
+				}
+			}
+		}
+		
+		for(var i=0;i<spacemen.length;i++){
+			if(bullets[j] && bullets[j].y < spacemen[i].y + 4*spacemen[i].a && bullets[j].y > spacemen[i].y){
+				if(bullets[j] && bullets[j].x < spacemen[i].x + 4*spacemen[i].a && bullets[j].x > spacemen[i].x){
+					killSpaceman(spacemen[i].x + 2*spacemen[i].a, spacemen[i].y + 2*spacemen[i].a, 'MAROON')
+					killSpaceman(spacemen[i].x + 2*spacemen[i].a, spacemen[i].y + 2*spacemen[i].a, 'red')
+					var snd = new Audio("http://fe.it-academy.by/Projects/Makarenko/scream.wav");
+					snd.play();
+					spacemen.splice(i,1);
+					i--
+				}
+			}
+		}
+		
+		
+		if(bullets[j] && bullets[j].y < 0){bullets.splice(j,1)};
+    }
+   
+	
+   
+	for (var i=0; i<blasts.length; i++)
+	{
+		var boom = blasts[i];
+		boom.update(1000/60);
+		boom.draw();
+		if(blasts[i].scale == 0){
+			blasts.splice(i,1);
+			i--;
+		}
+	}
+	
+	for(var i = 0; i <= spacemen.length;i++){
+		if(spacemen[i]){
+			spacemen[i].update();			
+			spacemen[i].draw(spacemen[i].x,spacemen[i].y);			
+			if(spacemen[i].x <= -100){
+				spacemen.splice(i,1);
+				i--;
+			} else if(spacemen[i].x + spacemen[i].a*3 > ship.x - 3*ship.a && spacemen[i].x < ship.x + 3*ship.a){
+				if(spacemen[i].y + spacemen[i].a*3 > ship.y - 3*ship.a && spacemen[i].y < ship.y + 3*ship.a){
+					lives<11?lives++:lives;
+					spacemen.splice(i,1);
+					i--;
+				}
+			}
+		}
+	}
+
+   
+  
+    for(var i = 0; i<particles.length; i++){       
+        context.fillStyle = particles[i].color;
+        context.fillRect(particles[i].x + particles[i].amp/* * Math.sin(-particles[i].y*Math.PI/180)*/,particles[i].y,particles[i].size,particles[i].size);
+        particles[i].y += particles[i].speed*2*particles[i].size;
+        if(particles[i].y>canvas.height){            
+            particles.splice(i,1)
+            var p = new Particle;
+            p.y = 0;
+            particles.push(p)
+        }
+       
+       
+    }
+/*
+    for(var j = 0;j<asteroids.length;j++){
+        drawAsteroid(asteroids[j].x,asteroids[j].y,asteroids[j].a)
+        asteroids[j].x += asteroids[j].dx
+        asteroids[j].y += asteroids[j].dy
+        if(asteroids[j].y > canvas.height + 100){
+			earthlives -= 10;
+            asteroids.splice(j,1)
+			j--;
+        } else if(asteroids[j].y + 3*asteroids[j].a > ship.y - 3*ship.a && asteroids[j].y - 3*asteroids[j].a < ship.y + 3*ship.a){
+			if(asteroids[j].x + 3*asteroids[j].a > ship.x - 3*ship.a && asteroids[j].x - 3*asteroids[j].a < ship.x + 3*ship.a){
+				var snd = new Audio("http://fe.it-academy.by/Projects/Makarenko/bomb.wav");
+				snd.play();
+				lives--;
+				lives<=0?lives=0:lives;
+				asteroids.splice(j,1)
+				j--;
+			}
+        }		
+    }
+ */
+	for(var j = 0; j < junks.length; j++){
+		
+		junks[j].draw();		
+		junks[j].update();		
+		if(junks[j].x > canvas.width - 100){
+			junks.splice(j,1)
+			j--;
+		} else if(junks[j].y > canvas.height + 100){
+			earthlives -= 10;
+            junks.splice(j,1)
+			j--;
+        } else if(junks[j].y + 9*junks[j].a > ship.y - 3*ship.a && junks[j].y < ship.y + 3*ship.a){
+			if(junks[j].x + 9*junks[j].a > ship.x - 3*ship.a && junks[j].x < ship.x + 3*ship.a){
+				var snd = new Audio("http://fe.it-academy.by/Projects/Makarenko/bomb.wav");
+				snd.play();
+				lives--;
+				lives<=0?lives=0:lives;
+				junks.splice(j,1)
+				j--;
+			}
+        }
+	}
+   
+	for(var i = 0; i<bombs.length;i++){
+		if(bombs[i]){
+			bombs[i].draw(ship.x,ship.y);
+			bombs[i].update();
+			
+			if(bombs[i].radius > canvas.height/2){		
+				for(var j = 0;j<junks.length;j++){
+				createExplosion(junks[j].x + 5*junks[j].a, junks[j].y + 5*junks[j].a, '#555');
+				createExplosion(junks[j].x + 5*junks[j].a, junks[j].y + 5*junks[j].a, 'MAROON');			
+				createExplosion(junks[j].x + 5*junks[j].a, junks[j].y + 5*junks[j].a, 'orange');									
+				junks.splice(j,1);
+			}
+				for(var k = 0;k<spacemen.length;k++){
+				killSpaceman(spacemen[k].x + 2*spacemen[k].a, spacemen[k].y + 2*spacemen[k].a, 'MAROON')
+				killSpaceman(spacemen[k].x + 2*spacemen[k].a, spacemen[k].y + 2*spacemen[k].a, 'red')				
+				spacemen.splice(k,1);
+				k--
+			}
+		}
+	}
+		if(bombs[i].radius > canvas.height*2){
+			bombs.splice(i,1)
+			i--;
+		}
+	}
+	
+	for(var i = 0;i<bombicons.length;i++){
+		bombicons[i].draw();
+		bombicons[i].update();
+
+		if(bombicons[i].x > canvas.width){
+			bombicons.splice(i,1);			
+		} else if(bombicons[i].x + bombicons[i].a*3 > ship.x - 3*ship.a && bombicons[i].x < ship.x + 3*ship.a){
+			if(bombicons[i].y + bombicons[i].a*3 > ship.y - 3*ship.a && bombicons[i].y < ship.y + 3*ship.a){
+				bombicons.splice(i,1);
+				bombcount++;
+			}
+		}		
+	}
+	
+	
+	
+    drawShip(ship.x,ship.y,ship.a)	
+	drawScores(scoreStr);
+	drawLives()	
+	drawBombs()
+	
+   requestAnimationFrame(draw);
+}
+}
+
+</script>
+
+
+</script>
+</body>
+</html>

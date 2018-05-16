@@ -10,13 +10,19 @@ var masterList = []
 var presentScore = 0
 var highScore = 0
 
-var ww = window,
-	dd = document,
-	ee = dd.documentElement,
-	gg = dd.getElementsByTagName('body')[0],
-	xx = ww.innerWidth || ee.clientWidth || gg.clientWidth,
-	yy = ww.innerHeight || ee.clientHeight || gg.clientHeight;
-console.log(xx + ' × ' + yy);
+// Игровая среда CANVAS и её размеры
+var canvas;
+var context;
+var viewportWidth = window.innerWidth;
+var viewportHeight = window.innerHeight;
+var cvx = (window.innerWidth - viewportWidth) * .5;
+var cvy = (window.innerHeight - viewportHeight) * .5;
+
+
+// Свойства определения игровых координат мыши
+var mouseX = (window.innerWidth - viewportWidth);
+var mouseY = (window.innerHeight - viewportHeight);
+var mouseIsDown = false;
 
 var c = document.getElementById("canvas1");
 //c.style.width = xx + 'px';
@@ -24,6 +30,27 @@ var c = document.getElementById("canvas1");
 var ctx = c.getContext("2d");
 //var w = xx-10;
 //var h = yy-10;
+
+// Устанавливаем слушателей событий
+document.addEventListener('mousemove', mouseMoveHandler, false);
+document.addEventListener('mousedown', mouseDownHandler, false);
+document.addEventListener('mouseup', mouseUpHandler, false);
+
+// Функции обработчиков событий (управление мышью)
+function mouseMoveHandler(event) {
+	console.log(event);
+	//document.body.style.cursor = 'crosshair';
+	//ipx = event.clientX - cvx;
+	//ipy = event.clientY - cvy;
+}
+
+function mouseDownHandler(event) {
+	mouseIsDown = true;
+}
+
+function mouseUpHandler(event) {
+	mouseIsDown = false;
+}
 
 
 var w = ctx.canvas.clientWidth;

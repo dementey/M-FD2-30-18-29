@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no, maximum-scale=1">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+  <script src="http://fe.it-academy.by/JQ/jquery.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+  <title></title>
+</head>
+<body>
+<div id="preloader"></div>
+<audio id='audio' autoplay='' preload='metadata' loop=''>
+  <source src="music/AndrewBird_MeasuringCupsCut.mp3" type="audio/mpeg" codecs="mp3">
+  <source src="music/AndrewBird_MeasuringCupsCut.ogg" type="audio/ogg" codecs="vorbis">
+</audio>
+<div id='content'>
+  <canvas id='cvs'>Если вы видите это сообщение, то у вас не поддерживается Canvas. Обновите браузер.</canvas>
+  <div id='start'>
+    <div id="progress" class="ui"><input type='text' id='scoreCounter'><img id='mute' src="img/muteOn.png">
+      <img id='pause' src='img/pause.png'>
+    </div>
+  </div>
+    <div id="menu" class="ui">
+      <h2 id="title"></h2>
+      <input type="text" placeholder="Введите Ваше имя" id='userName'>
+      <a href="#storeUserName" id='storeUserName'>Запомнить меня</a>
+      <a href="#Records" id='showRecords'>Таблица рекордов</a>
+      <ul>
+        <li>1. &laquo;У каждого человека свои звезды&raquo;. Избегайте столкновения с ними.</li>
+        <li>2. Лисы и Розы дают временнную неуязвимость.</li>
+        <li>3. Используйте неуязвимость, разбивая звёзды.</li>
+        <li>4. Розы также замедляют время.</li>
+        <li>5. Барашки, а именно они в коробочках, взрывают звёзды вокруг Вас.</li>
+        <li>6. &laquo;Если идти всё прямо да прямо, далеко не уйдешь…&raquo;</br>
+          &nbsp;&nbsp;&nbsp;&nbsp;Перемещайтесь активнее, набирая дополнительные очки.
+        </li>
+        <li>7. &laquo;…Зорко одно лишь сердце. Самого главного глазами не увидишь&raquo;.</br>
+          &nbsp;&nbsp;&nbsp;&nbsp;Путешевствуйте в пределах видимого окна!
+        </li>
+        <li> &nbsp;&nbsp;&nbsp;&nbsp;P.S. Ни один барашек не пострадал ( :</li>
+      </ul>
+      <a href="#Start" id="startButton">Старт</a>
+    </div>
+  <div id="recordsMenu" class="ui">
+    <a href="#Menu" id='backToMenu'>Вернуться в меню</a>
+    <div id='recordsTable'></div>
+  </div>
+</div>
+
+<script type='text/javascript' src='js/record.js'></script>
+<script type='text/javascript' src='js/lePetitPrince.js'></script>
+<script type='text/javascript' src='js/SPA.js'></script>
+
+<script>
+  jQuery(document).ready(function ($) {
+    $(window).load(function () {
+      setTimeout(function () {
+        $('#preloader').fadeOut('slow', function () {});
+      }, 1500);
+    });
+  });
+</script>
+</body>
+</html>

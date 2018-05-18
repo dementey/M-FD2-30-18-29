@@ -1,3 +1,4 @@
+//debugger;
 var records = new function () {
 	var StringName='KLUCHNIC_PETITPRINCE_RECORDS';
 	var password; //переменная для хранения пароля
@@ -10,7 +11,7 @@ var records = new function () {
 		LoadStorage(ReadReady);
 	}
 
-// функция проверяет, наблал ли игрок достаточно очков, чтобы попасть в таблицу рекордов,
+// функция проверяет, набрал ли игрок достаточно очков, чтобы попасть в таблицу рекордов,
 // и возвращает это значение, добавляет его в таблицу
 	function addRecordToTable() {
 		var addPossible = false;

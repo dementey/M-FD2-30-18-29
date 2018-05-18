@@ -1,5 +1,5 @@
 lePetitWorld = new function () {
-
+//debugger;
 // Игровая среда CANVAS и её размеры
     var canvas;
     var context;
@@ -237,6 +237,7 @@ lePetitWorld = new function () {
     }
 
     function mouseDownHandler(event) {
+        console.log('mouseDownHandler');
         mouseIsDown = true;
     }
 

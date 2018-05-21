@@ -2,7 +2,7 @@
 var records = new function () {
 	var StringName='KLUCHNIC_PETITPRINCE_RECORDS';
 	var password; //переменная для хранения пароля
-	var AjaxHandlerScript = "/AjaxStringStorage2.php";
+	var AjaxHandlerScript = "http://fe.it-academy.by/AjaxStringStorage2.php";
 	var recordsLength = 10;
 
 	var userName, score, recordStorage;
@@ -86,6 +86,7 @@ var records = new function () {
 
 // функция получает сообщения и показывает их в виде таблицы
 	function ReadReady(ResultH) {
+		console.log(ResultH);
 		if (ResultH.error != undefined)
 			alert("Извините, таблицы рекордов временно недоступны.\n" + ResultH.error);
 		else {

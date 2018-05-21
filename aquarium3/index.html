@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<script src="http://fe.it-academy.by/JQ/jquery.js"></script>
+</head>
+<body>
+
+<style>
+*{
+padding: 0;
+margin: 0;
+}
+html,body{
+    height: 100%;
+	width: 100%;
+}
+body{
+    background: black;
+	font-family: monospace; 
+}
+
+#namesubmit{
+	height: 40px;
+	cursor: pointer;
+	font-size:30px; 
+	border: 1px solid #aaff00;
+	background: black; 
+	color: #aaff00;
+	font-family: monospace; 
+	font-weight: bold;
+	position: absolute; 
+	width: 7%;
+	margin-left: 55%;
+	text-align: center;
+}
+
+#nameinput{
+	height: 40px;
+	font-size:30px; 
+	border: 1px solid #aaff00;
+	background: black; 
+	color: #aaff00;
+	font-family: monospace; 
+	font-weight: bold;
+	position: absolute; 
+	width: 18%;
+	margin-left: 37%;
+	text-align: center;
+}
+
+#entername{
+	width: 25%;
+	margin: 10px;
+	margin-left: 37%; 
+	display: block;
+}
+
+@media screen and (max-width: 1200px){
+
+	
+
+	#namesubmit{		
+		margin-left: 63%;		
+	}
+
+	#entername,
+	#nameinput{
+		width: 40%;
+		margin-left: 30%;
+	}
+
+}
+
+@media screen and (max-width: 800px){
+
+	#namesubmit{
+		
+		margin-left: 70%;
+		width: 12%;
+	}
+
+	#entername,
+	#nameinput{
+		width: 60%;
+		margin-left: 20%;
+	}
+
+}
+
+#scoretable{
+	display: table;
+	text-align: center;
+	vertical-align: middle;
+	width: 100%;
+	height: 100%;
+	color: #009900;
+	
+}
+
+#scorerow{
+	display: table-row;
+	width: 100%;
+	height: 100%;
+}
+
+#scorecell{
+	display: table-cell;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 2em;
+}
+
+#scorebutton{
+	margin: 20px;
+	background-color: #009900;
+	color: black;
+	border: 3px double #009900;
+	padding: 5px 20px;
+}
+
+</style>
+
+<audio autoplay loop preload src="http://fe.it-academy.by/Projects/Makarenko/videoplayback.mp3"></audio>
+<audio>
+ <source src="http://fe.it-academy.by/Projects/Makarenko/videoplayback.mp3">
+</audio>
+
+
+
+
+<script>
+
+/*---------------START SCREEN-------------------*/
+
+
+
+splashScreen()
+function splashScreen(){
+
+var logoscreen = document.createElement('div');
+logoscreen.style.cssText = 'width: 100%; height: 100%;';
+logoscreen.id = 'startscreen'
+document.body.appendChild(logoscreen);
+
+var logo = document.createElement('img');
+logo.src = "images/logo.png"
+logo.style.cssText = 'width: 60%; margin-left: 25%;';
+logoscreen.appendChild(logo);
+
+var nameform = document.createElement('div');
+nameform.id = 'nameform';
+nameform.style.display = 'none';
+nameform.style.cssText = ''
+logoscreen.appendChild(nameform);
+
+var entername = document.createElement('img');
+entername.id = 'entername'
+entername.src = 'images/entername.png'
+nameform.appendChild(entername);
+
+var nameinput = document.createElement('input');
+nameinput.id = 'nameinput';
+if(localStorage.getItem('ajname') !== null){nameinput.placeholder = localStorage.getItem('ajname')} else {nameinput.placeholder = 'Player1'};
+nameinput.type = 'text'
+nameinput.name = 'nameinput'
+nameinput.maxLength = 10
+nameform.appendChild(nameinput);
+
+var namesubmit = document.createElement('div');
+namesubmit.id = 'namesubmit'
+namesubmit.innerHTML = 'GO'
+
+
+namesubmit.onclick = function(){
+	nameinput.value ? localStorage.setItem('ajname', nameinput.value) : localStorage.setItem('ajname',nameinput.placeholder);
+	document.getElementById('startscreen').style.display = 'none';
+	gameOn();
+}
+nameform.appendChild(namesubmit);
+           
+}
+
+
+
+
+/*---------------GAME ON-------------------*/
+
+
+
+</script>
+
+
+</script>
+</body>
+</html>

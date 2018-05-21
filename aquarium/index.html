@@ -10,133 +10,135 @@
 </head>
 
 <body>
-		<style>
-				*{
-				padding: 0;
-				margin: 0;
-				}
-				html,body{
-					height: 100%;
-					width: 100%;
-				}
-				body{
-					background: black;
-					font-family: monospace; 
-				}
-				
-				#namesubmit{
-					height: 40px;
-					cursor: pointer;
-					font-size:30px; 
-					border: 1px solid #aaff00;
-					background: black; 
-					color: #aaff00;
-					font-family: monospace; 
-					font-weight: bold;
-					position: absolute; 
-					width: 7%;
-					margin-left: 55%;
-					text-align: center;
-				}
-				
-				#nameinput{
-					height: 40px;
-					font-size:30px; 
-					border: 1px solid #aaff00;
-					background: black; 
-					color: #aaff00;
-					font-family: monospace; 
-					font-weight: bold;
-					position: absolute; 
-					width: 18%;
-					margin-left: 37%;
-					text-align: center;
-				}
-				
-				#entername{
-					width: 25%;
-					margin: 10px;
-					margin-left: 37%; 
-					display: block;
-				}
-				
-				@media screen and (max-width: 1200px){
-				
-					
-				
-					#namesubmit{		
-						margin-left: 63%;		
-					}
-				
-					#entername,
-					#nameinput{
-						width: 40%;
-						margin-left: 30%;
-					}
-				
-				}
-				
-				@media screen and (max-width: 800px){
-				
-					#namesubmit{
-						
-						margin-left: 70%;
-						width: 12%;
-					}
-				
-					#entername,
-					#nameinput{
-						width: 60%;
-						margin-left: 20%;
-					}
-				
-				}
-				
-				#scoretable{
-					display: table;
-					text-align: center;
-					vertical-align: middle;
-					width: 100%;
-					height: 100%;
-					color: #009900;
-					
-				}
-				
-				#scorerow{
-					display: table-row;
-					width: 100%;
-					height: 100%;
-				}
-				
-				#scorecell{
-					display: table-cell;
-					width: 100%;
-					height: 100%;
-					text-align: center;
-					vertical-align: middle;
-					font-size: 2em;
-				}
-				
-				#scorebutton{
-					margin: 20px;
-					background-color: #009900;
-					color: black;
-					border: 3px double #009900;
-					padding: 5px 20px;
-				}
-				
-				</style>
-				
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+		html,
+		body {
+			height: 100%;
+			width: 100%;
+		}
+
+		body {
+			background: black;
+			font-family: monospace;
+		}
+
+		#namesubmit {
+			height: 40px;
+			cursor: pointer;
+			font-size: 30px;
+			border: 1px solid #aaff00;
+			background: black;
+			color: #aaff00;
+			font-family: monospace;
+			font-weight: bold;
+			position: absolute;
+			width: 7%;
+			margin-left: 55%;
+			text-align: center;
+		}
+
+		#nameinput {
+			height: 40px;
+			font-size: 30px;
+			border: 1px solid #aaff00;
+			background: black;
+			color: #aaff00;
+			font-family: monospace;
+			font-weight: bold;
+			position: absolute;
+			width: 18%;
+			margin-left: 37%;
+			text-align: center;
+		}
+
+		#entername {
+			width: 25%;
+			margin: 10px;
+			margin-left: 37%;
+			display: block;
+		}
+
+		@media screen and (max-width: 1200px) {
+
+
+
+			#namesubmit {
+				margin-left: 63%;
+			}
+
+			#entername,
+			#nameinput {
+				width: 40%;
+				margin-left: 30%;
+			}
+
+		}
+
+		@media screen and (max-width: 800px) {
+
+			#namesubmit {
+
+				margin-left: 70%;
+				width: 12%;
+			}
+
+			#entername,
+			#nameinput {
+				width: 60%;
+				margin-left: 20%;
+			}
+
+		}
+
+		#scoretable {
+			display: table;
+			text-align: center;
+			vertical-align: middle;
+			width: 100%;
+			height: 100%;
+			color: #009900;
+
+		}
+
+		#scorerow {
+			display: table-row;
+			width: 100%;
+			height: 100%;
+		}
+
+		#scorecell {
+			display: table-cell;
+			width: 100%;
+			height: 100%;
+			text-align: center;
+			vertical-align: middle;
+			font-size: 2em;
+		}
+
+		#scorebutton {
+			margin: 20px;
+			background-color: #009900;
+			color: black;
+			border: 3px double #009900;
+			padding: 5px 20px;
+		}
+	</style>
+
 
 	<body onload="setTimeout(function() { window.scrollTo(0, 1) }, 100);">
 
-		<!--<canvas id="introscreen" class="intro"></canvas>-->
+		<canvas id="introscreen" class="intro"></canvas>
 		<div id="title" class="intro">AquariumGame</div>
 		<p id="subheading" class="intro">Haiduk Dzmitry</p>
 		<button id="start" class="intro" onclick="startUp()">Start</button>
 
 
-		<canvas id="canvas1" class="data" width='1080' height='1920' style="border:1px solid #000000;"></canvas>
+		<canvas id="canvas1" class="data"></canvas>
 		<img id="snowflake" src="./img/snowflake.png" style="display:none" />
 		<img id="present" src="./img/present.png" style="display:none" />
 		<img id="santa" src="./img/fish.png" style="display:none" />
@@ -145,6 +147,6 @@
 		<p id="highscore" class="data">Highscore: </p>
 		<p id="life" class="data"></p>
 		<button id="playagain" onclick="startUp()">Play again?</button>
-		<script type='text/javascript' src="landingpage.js"></script>
+		<!-- <script type='text/javascript' src="landingpage.js"></script> -->
 		<script type='text/javascript' src="aquariumgame.js"></script>
 	</body>

@@ -1,0 +1,35 @@
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+  <script src="http://fe.it-academy.by/JQ/jquery.js"></script>
+  <script>
+
+    "use strict";
+
+    var ajaxHandlerScript = "https://fe.it-academy.by/AjaxStringStorage2.php";
+    var stringName = '1_TOR';
+    var valueTOR = '[{"name":"alex","score": 1}, {"name":"ilya","score":2}]';
+
+    function storeInfo() {
+
+      $.ajax({
+        url: ajaxHandlerScript, type: 'POST', cache: false, dataType: 'json',
+        data: { f: 'INSERT', n: stringName, v: valueTOR },
+        success: lockGetReady, error: errorHandler
+      }
+      );
+    }
+
+    function lockGetReady(callresult) {
+      console.log(callresult);
+    };
+    function errorHandler(jqXHR, statusStr, errorStr) {
+      alert(statusStr + ' ' + errorStr);
+    }
+    storeInfo();
+  </script>
+</body>

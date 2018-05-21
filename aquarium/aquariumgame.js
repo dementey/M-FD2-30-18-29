@@ -10,12 +10,28 @@ var masterList = []
 var presentScore = 0
 var highScore = 0
 
+function preLoad() {
+	//var canvas = document.createElement('canvas');
+	//canvas.id = "canvas1";
+	//canvas.width = document.body.clientWidth;
+	//canvas.height = document.body.clientHeight;
+	//canvas.style.position = "absolute";
+	//document.body.appendChild(canvas);
 
+	//var img = document.createElement('img');
+	//img.id="snowflake";
+	//img.src="./img/snowflake.png";
+	//img.style='display:none';
+};
 
 var c = document.getElementById("canvas1");
+c.width = document.body.clientWidth;
+c.height = document.body.clientHeight;
+console.log(c.width + 'x' + c.height)
 var ctx = c.getContext("2d");
 var w = ctx.canvas.clientWidth;
 var h = ctx.canvas.clientHeight;
+console.log(w + 'x' + h);
 
 function levelUp() {
 	var adjust = timer / 45
@@ -94,7 +110,7 @@ function dropSnowflake(circleList) {
 //-----------------------------------------------------------------------------------
 function Player() {
 	this.radius = 20;
-	this.x = h / 2; this.y = w / 2;
+	this.x = w / 2; this.y = h / 2;
 	this.colour = "black";
 	this.alpha = 1
 	this.type = "player";
@@ -103,8 +119,8 @@ function Player() {
 };
 Player.prototype = new Circle();
 Player.prototype.move = function () {
-	this.x += ipx / 20
-	this.y += ipy / 20
+	this.x += ipx / 10
+	this.y += ipy / 10
 };
 Player.prototype.draw = function () {
 	ctx.fillStyle = this.colour
@@ -131,6 +147,8 @@ function dropPresent(circleList) {
 };
 //-----------------------------------------------------------------------------------
 function createCircle(circleList) {
+	debugger
+	console.log(circleList);
 	var circle = new Circle(randomInt(5, 12));
 	circleList.push(circle);
 	masterList.push(circle)
@@ -157,6 +175,8 @@ function remove(element, list) {
 };
 //-----------------------------------------------------------------------------------
 function renderCircles(list) {
+	
+	console.log(list);
 	ctx.clearRect(0, 0, w, h);
 	scanCollisions()
 	for (var i = 0; i < list.length; i++) {
@@ -209,6 +229,8 @@ function reset() {
 };
 //-----------------------------------------------------------------------------------
 function startUp() {
+	
+	preLoad();
 	if (started === false) {
 		var elem = document.getElementById("playagain");
 		elem.style.visibility = "hidden";
@@ -222,13 +244,16 @@ function startUp() {
 		}
 		var player = new Player();
 		playerList.push(player);
+		console.log(playerList)
 		masterList.push(player)
+		console.log(masterList)
 		circleDraw = setInterval("renderCircles(masterList)", 20);
 		circleGen = setInterval("createCircle(circles)", 2000);
 		snowDrop = setInterval("dropSnowflake(flakes)", 6000);
 		presentDrop = setInterval("dropPresent(presents)", 5000)
 		gameTimer = setInterval("incrementTimer()", 1000);
 		intervals.push(circleGen, circleDraw, gameTimer, snowDrop, presentDrop);
+		console.log(intervals)
 		started = true
 	};
 };

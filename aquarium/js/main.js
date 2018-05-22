@@ -542,7 +542,7 @@ Player2.prototype.draw = function () {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
     ctx.fill();
-    ctx.drawImage(santa, this.x - 15, this.y - 15, 30, 30)
+    ctx.drawImage(fish, this.x - 15, this.y - 15, 30, 30)
 };
 //Класс червяка
 function Worm() {

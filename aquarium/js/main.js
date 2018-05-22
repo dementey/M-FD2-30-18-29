@@ -405,10 +405,10 @@ gameFunc = new function () {
             masterList.push(player2)
             circleDraw = setInterval("renderCircles(masterList)", 20);
             circleGen = setInterval("createCircle(circles)", 2000);
-            snowDrop = setInterval("dropSnowflake(heartt)", 6000);
+            heartDropp = setInterval("dropSnowflake(heartt)", 6000);
             wormDrop = setInterval("dropWorm(worms)", 5000)
             gameTimer = setInterval("incrementTimer()", 1000);
-            intervals.push(circleGen, circleDraw, gameTimer, snowDrop, wormDrop);
+            intervals.push(circleGen, circleDraw, gameTimer, heartDropp, wormDrop);
             started = true;
 
         };

@@ -405,7 +405,7 @@ gameFunc = new function () {
             masterList.push(player2)
             circleDraw = setInterval("renderCircles(masterList)", 20);
             circleGen = setInterval("createCircle(circles)", 2000);
-            heartDropp = setInterval("dropSnowflake(heartt)", 6000);
+            heartDropp = setInterval("dropHeart(heartt)", 6000);
             wormDrop = setInterval("dropWorm(worms)", 5000)
             gameTimer = setInterval("incrementTimer()", 1000);
             intervals.push(circleGen, circleDraw, gameTimer, heartDropp, wormDrop);
@@ -491,34 +491,34 @@ function Circle(radius) {
 }
 
 //Класс сердечек
-function SnowFlake() {
+function Heart() {
     this.radius = 20;
     this.x = randomInt(30, w - 30);
     this.y = -20
     this.hits = 0
     this.hit = false
-    this.type = "snowFlake";
+    this.type = "heart";
 }
-SnowFlake.prototype = new Circle();
-SnowFlake.prototype.move = function () {
+Heart.prototype = new Circle();
+Heart.prototype.move = function () {
     this.y += .25;
     if (randomInt(1, 10) < 6) {
         this.x += 1
     }
     else { this.x -= 1 }
 };
-SnowFlake.prototype.draw = function () {
-    ctx.drawImage(snowflake, this.x - 15, this.y - 15, 30, 30)
+Heart.prototype.draw = function () {
+    ctx.drawImage(heart, this.x - 15, this.y - 15, 30, 30)
 };
-SnowFlake.prototype.bounding = function () {
+Heart.prototype.bounding = function () {
     if (this.y > (h + 20)) {
         this.alive = false
     }
 };
-function dropSnowflake(circleList) {
-    var snowflake = new SnowFlake()
-    circleList.push(snowflake);
-    masterList.push(snowflake);
+function dropHeart(circleList) {
+    var heart = new Heart()
+    circleList.push(heart);
+    masterList.push(heart);
 };
 
 //Класс игрока2
@@ -551,7 +551,7 @@ function Worm() {
     this.x = randomInt(25, w - 30);
     this.y = -20
 };
-Worm.prototype = new SnowFlake();
+Worm.prototype = new Heart();
 Worm.prototype.draw = function () {
     ctx.drawImage(worm, this.x - 25, this.y - 25, 50, 50)
 };
@@ -620,7 +620,7 @@ function renderCircles(list) {
         if (item.alive == false) {
             list.splice(i, 1)
             //удаление из списка
-            if (item.type == "snowFlake") {
+            if (item.type == "heart") {
                 remove(item, heartt)
             }
             else if (item.type == "circle") {
@@ -687,7 +687,7 @@ function collisionCheck(circleInput, player2) {
         c = circleInput[k];
         if (collision(c.x, c.y, c.radius, player2.x, player2.y, player2.radius)) {
             player2.hits += 1;
-            if (c.type == "snowFlake" || c.type == "worm") { c.alive = false }
+            if (c.type == "heart" || c.type == "worm") { c.alive = false }
         }
         if (player2.hits > startHits) {
             player2.hit = true;

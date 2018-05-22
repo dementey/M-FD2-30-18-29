@@ -406,9 +406,9 @@ gameFunc = new function () {
             circleDraw = setInterval("renderCircles(masterList)", 20);
             circleGen = setInterval("createCircle(circles)", 2000);
             snowDrop = setInterval("dropSnowflake(heart)", 6000);
-            presentDrop = setInterval("dropPresent(presents)", 5000)
+            wormDrop = setInterval("dropWorm(worms)", 5000)
             gameTimer = setInterval("incrementTimer()", 1000);
-            intervals.push(circleGen, circleDraw, gameTimer, snowDrop, presentDrop);
+            intervals.push(circleGen, circleDraw, gameTimer, snowDrop, wormDrop);
             started = true;
 
         };
@@ -545,20 +545,20 @@ Player2.prototype.draw = function () {
     ctx.drawImage(santa, this.x - 15, this.y - 15, 30, 30)
 };
 //Класс червяка
-function Present() {
+function Worm() {
 
-    this.type = "present";
+    this.type = "worm";
     this.x = randomInt(25, w - 30);
     this.y = -20
 };
-Present.prototype = new SnowFlake();
-Present.prototype.draw = function () {
-    ctx.drawImage(present, this.x - 25, this.y - 25, 50, 50)
+Worm.prototype = new SnowFlake();
+Worm.prototype.draw = function () {
+    ctx.drawImage(worm, this.x - 25, this.y - 25, 50, 50)
 };
-function dropPresent(circleList) {
-    var present = new Present();
-    circleList.push(present);
-    masterList.push(present);
+function dropWorm(circleList) {
+    var worm = new Worm();
+    circleList.push(worm);
+    masterList.push(worm);
 };
 
 gameFunc.init();
@@ -569,9 +569,9 @@ var started = false;
 var timer = 0;
 var intervals = [];
 var heart = [];
-var presents = [];
+var worms = [];
 var masterList = [];
-var presentScore = 0;
+var wormScore = 0;
 var highScore = 0;
 var c = document.getElementById("canvas1");
 c.width = window.innerWidth;
@@ -598,8 +598,8 @@ function scanCollisions() {
     collisionCheck(heart, p);
     if (p.hit) { p.life += 50; if (p.life > 275) { p.life = 275 } }
     p.hit = false;
-    collisionCheck(presents, p);
-    if (p.hit) { p.colour = "green"; p.alpha = 1; presentScore += 10 };
+    collisionCheck(worms, p);
+    if (p.hit) { p.colour = "green"; p.alpha = 1; wormScore += 10 };
     p.hit = false
     collisionCheck(circles, p);
     if (p.hit) { p.colour = "red"; p.alpha = 1; p.life -= 3.5 }
@@ -626,8 +626,8 @@ function renderCircles(list) {
             else if (item.type == "circle") {
                 remove(item, circles)
             }
-            else if (item.type == "present") {
-                remove(item, presents)
+            else if (item.type == "worm") {
+                remove(item, worms)
             }
         };
 
@@ -653,8 +653,8 @@ function reset() {
     heart = [];
     player2List = [];
     masterList = [];
-    presents = [];
-    presentScore = 0;
+    worms = [];
+    wormScore = 0;
     timer = 0;
     started = false;
     var xx, yy;
@@ -687,13 +687,13 @@ function collisionCheck(circleInput, player2) {
         c = circleInput[k];
         if (collision(c.x, c.y, c.radius, player2.x, player2.y, player2.radius)) {
             player2.hits += 1;
-            if (c.type == "snowFlake" || c.type == "present") { c.alive = false }
+            if (c.type == "snowFlake" || c.type == "worm") { c.alive = false }
         }
         if (player2.hits > startHits) {
             player2.hit = true;
         }
         else { player2.hit = false; }
-        document.getElementById("score").innerHTML = ("Бонус: " + presentScore);
+        document.getElementById("score").innerHTML = ("Бонус: " + wormScore);
         document.getElementById("highscore").innerHTML = ("Рекорд: " + highScore);
 
         var elem = document.getElementById("life");
@@ -708,7 +708,7 @@ function collisionCheck(circleInput, player2) {
 //Конец игры
 function gameOver2() {
     gameOver();
-    var total = presentScore + timer;
+    var total = wormScore + timer;
     if (total > highScore) {
         highScore = total
     }

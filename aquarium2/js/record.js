@@ -1,6 +1,5 @@
-//debugger;
 var records = new function () {
-	var StringName='1_TOR';
+	var StringName = '1_TOR';
 	var password; //переменная для хранения пароля
 	var AjaxHandlerScript = "https://fe.it-academy.by/AjaxStringStorage2.php";
 	var recordsLength = 10;
@@ -11,8 +10,8 @@ var records = new function () {
 		LoadStorage(ReadReady);
 	}
 
-// функция проверяет, набрал ли игрок достаточно очков, чтобы попасть в таблицу рекордов,
-// и возвращает это значение, добавляет его в таблицу
+	// функция проверяет, набрал ли игрок достаточно очков, чтобы попасть в таблицу рекордов,
+	// и возвращает это значение, добавляет его в таблицу
 	function addRecordToTable() {
 		var addPossible = false;
 		var userScoreExists;
@@ -21,35 +20,35 @@ var records = new function () {
 			score: score
 		};
 		// пытаемся найти в таблице результат этого игрока
-		 var existingUserScore = recordStorage.filter(function (result){
-			 return userName === result.name;
-		 });
-		 userScoreExists = existingUserScore.length > 0;
+		var existingUserScore = recordStorage.filter(function (result) {
+			return userName === result.name;
+		});
+		userScoreExists = existingUserScore.length > 0;
 
 		// (если нашли) проверям, набрал ли он больше очков, чем в прошлый раз
 		if (userScoreExists) {
-			 if (existingUserScore[0].score < score) {
-				 // (если да) перезаписываем его очки
-				 addPossible = true;
-				 existingUserScore[0].score = score;
-			 }
-		 }
-		 else {
+			if (existingUserScore[0].score < score) {
+				// (если да) перезаписываем его очки
+				addPossible = true;
+				existingUserScore[0].score = score;
+			}
+		}
+		else {
 			// (если не нашли) проверяем, есть ли в таблице свободное место
-			 if (recordStorage.length < recordsLength) {
-				 // (если да) записываем результат в конец таблицы
-				 recordStorage.push(userResult);
-				 addPossible = true;
-			 }
-			 else {
-				 // (если нет) сверяем очки игрока с последним результатом)
-				 if (recordStorage[recordStorage.length - 1].score < score) {
-					 // (если у игрока больше) записываем результат игрока вместо последнего результата
-					 recordStorage[recordStorage.length - 1] = userResult;
-					 addPossible = true;
-				 }
-			 }
-		 }
+			if (recordStorage.length < recordsLength) {
+				// (если да) записываем результат в конец таблицы
+				recordStorage.push(userResult);
+				addPossible = true;
+			}
+			else {
+				// (если нет) сверяем очки игрока с последним результатом)
+				if (recordStorage[recordStorage.length - 1].score < score) {
+					// (если у игрока больше) записываем результат игрока вместо последнего результата
+					recordStorage[recordStorage.length - 1] = userResult;
+					addPossible = true;
+				}
+			}
+		}
 		// сортируем таблицу и вызываем UpdateStorage
 		recordStorage.sort(Compare);
 		UpdateStorage();
@@ -58,33 +57,33 @@ var records = new function () {
 
 	function UpdateStorage() {
 		$.ajax({
-				url: AjaxHandlerScript,
-				type: 'POST',
-				data: {
-					f: 'UPDATE', n: StringName,
-					v: JSON.stringify(recordStorage), p: password
-				},
-				cache: false,
-				success: UpdateReady,
-				error: ErrorHandler
-			}
+			url: AjaxHandlerScript,
+			type: 'POST',
+			data: {
+				f: 'UPDATE', n: StringName,
+				v: JSON.stringify(recordStorage), p: password
+			},
+			cache: false,
+			success: UpdateReady,
+			error: ErrorHandler
+		}
 		);
 	}
 
 
 	function LoadStorage() {
 		$.ajax({
-				url: AjaxHandlerScript,
-				type: 'POST',
-				data: {f: 'READ', n: StringName},
-				cache: false,
-				success: ReadReady,
-				error: ErrorHandler
-			}
+			url: AjaxHandlerScript,
+			type: 'POST',
+			data: { f: 'READ', n: StringName },
+			cache: false,
+			success: ReadReady,
+			error: ErrorHandler
+		}
 		);
 	}
 
-// функция получает сообщения и показывает их в виде таблицы
+	// функция получает сообщения и показывает их в виде таблицы
 	function ReadReady(ResultH) {
 		if (ResultH.error != undefined)
 			alert("Извините, таблицы рекордов временно недоступны.\n" + ResultH.error);
@@ -94,7 +93,7 @@ var records = new function () {
 		}
 	}
 
-//функция отображения таблицы победителей	
+	//функция отображения таблицы победителей	
 	function ShowTable() {
 		var PageHTML = "",
 			name,
@@ -105,24 +104,24 @@ var records = new function () {
 		for (var i = 0; i < recordStorage.length; i++) {
 			name = recordStorage[i].name;
 			score = recordStorage[i].score;
-			PageHTML += '<tr><td>' + (i+1) + '</td><td class="userName">' + name + '</td><td class="userScore">' + score + '</td></td></tr>';
+			PageHTML += '<tr><td>' + (i + 1) + '</td><td class="userName">' + name + '</td><td class="userScore">' + score + '</td></td></tr>';
 		}
 
 		PageHTML += '</table>';
 		$('#recordsTable').empty().append(PageHTML);
 	}
 
-// функция добавляет данные в хэш и отправляет обновленный хэш на сервер
+	// функция добавляет данные в хэш и отправляет обновленный хэш на сервер
 	function AddUsers() {
 		password = Math.random();
 		$.ajax({
-				url: AjaxHandlerScript,
-				type: 'POST',
-				data: {f: 'LOCKGET', n: StringName, p: password},
-				cache: false,
-				success: LockGetReady,
-				error: ErrorHandler
-			}
+			url: AjaxHandlerScript,
+			type: 'POST',
+			data: { f: 'LOCKGET', n: StringName, p: password },
+			cache: false,
+			success: LockGetReady,
+			error: ErrorHandler
+		}
 		);
 	}
 
@@ -151,7 +150,7 @@ var records = new function () {
 	}
 
 
-// вывод сообщения об ошибке при записи
+	// вывод сообщения об ошибке при записи
 	function UpdateReady(ResultH) {
 		if (ResultH.error != undefined) {
 			alert("Извините, таблицы рекордов временно недоступны.\n" + ResultH.error);
@@ -160,12 +159,12 @@ var records = new function () {
 		}
 	}
 
-//вывод сообщения об ошибке
+	//вывод сообщения об ошибке
 	function ErrorHandler(jqXHR, StatusStr, ErrorStr) {
 		alert("Извините, таблицы рекордов временно недоступны.\n" + StatusStr + ' ' + ErrorStr);
 	}
 
-//функция сравнения по времени для сортировки таблицы
+	//функция сравнения по времени для сортировки таблицы
 	function Compare(A, B) {
 		return B.score - A.score;
 	}

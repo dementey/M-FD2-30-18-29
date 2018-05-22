@@ -1,6 +1,7 @@
 window.onhashchange = SwitchToStateFromURLHash;
 
 function SwitchToStateFromURLHash(param) {
+   
     var URLHash = window.location.hash;
 
     //console.log('Закладка изменилась: ', URLHash);

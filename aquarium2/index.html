@@ -20,13 +20,19 @@
   </audio>
   <div id='content'>
     <canvas id='cvs'>Если вы видите это сообщение, то у вас не поддерживается Canvas. Обновите браузер.</canvas>
+
     <div id='start'>
       <div id="progress" class="ui">
         <input type='text' id='scoreCounter'>
+        <span id="timer">Счетчик:</span>
+        <span id="score">Бонус:</span>
+        <span id="highscore">Рекорд:</span>
+        <p id="life"></p>
         <img id='mute' src="img/muteOn.png">
-        <img id='pause' src='img/pause.png'>
       </div>
     </div>
+
+
     <div id="menu" class="ui">
       <h2 id="title"></h2>
       <input type="text" placeholder="Введите Ваше имя" id='userName'>
@@ -40,29 +46,25 @@
       </ul>
       <a href="#Start" id="startButton">Старт</a>
     </div>
+
+
     <div id="recordsMenu" class="ui">
       <a href="#Menu" id='backToMenu'>Вернуться в меню</a>
       <div id='recordsTable'></div>
     </div>
+
   </div>
-
-
-  <!-- <button id="start2" class="intro" onclick="startUp()">Start</button> -->
 
   <canvas id="canvas1" class="data"></canvas>
   <img id="snowflake" src="./img/snowflake.png" style="display:none" />
   <img id="present" src="./img/present.png" style="display:none" />
   <img id="santa" src="./img/fish.png" style="display:none" />
-  <p id="timer" class="data">Survived:</p>
-  <p id="score" class="data">Bonus: </p>
-  <p id="highscore" class="data">Highscore: </p>
-  <p id="life" class="data"></p>
-  <button id="playagain" onclick="startUp()">Play again?</button>
+
+  <!--<button id="playagain" onclick="startUp()">Play again?</button>-->
 
 
   <script type='text/javascript' src='js/record.js'></script>
-  <script type='text/javascript' src='js/landingPage.js'></script>
-  <script type='text/javascript' src='js/aquariumgame.js'></script>
+  <script type='text/javascript' src='js/main.js'></script>
   <script type='text/javascript' src='js/SPA.js'></script>
 
   <script>

@@ -1,4 +1,5 @@
 gameFunc = new function () {
+
     // Игровая среда CANVAS и её размеры
     var canvas;
     var context;
@@ -39,12 +40,7 @@ gameFunc = new function () {
     var paused = false;
     var score = 0;
     var scoreCounter;
-    var time = 0;
     var frequency = 1000 / 60;
-
-    // Игровая скорость и сложность!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    var velocity = { x: 0, y: 1 };
-
 
     // Функция-'конструктор' игры
     this.init = function () {
@@ -66,7 +62,6 @@ gameFunc = new function () {
         progress.appendChild(checkTime);
         audio = document.getElementById('audio');
         mute = document.getElementById('mute');
-        pause = document.getElementById('pause');
         scoreCounter = document.getElementById('scoreCounter');
 
         if (canvas && canvas.getContext) {
@@ -85,7 +80,6 @@ gameFunc = new function () {
             window.addEventListener('resize', resizeHandler, false);
             window.addEventListener('orientationchange', resizeHandler, false);
             mute.addEventListener('click', muteHandler, false);
-            pause.addEventListener('click', pauseGameHandler, false);
 
             // Инициируем игрока 
             player = new Player();
@@ -103,7 +97,6 @@ gameFunc = new function () {
         if (playing == false) {
             playing = true;
 
-
             // Обновляем игровые свойства
             bubbles = [];
             score = 0;
@@ -114,14 +107,13 @@ gameFunc = new function () {
             // Корректируем отображение UI в соответствии с началом игрового процесса
             progress.style.display = 'block';
 
-            time = new Date().getTime();
             if (!isLoud) {
                 audio.pause();
             } else {
                 audio.play();
             }
         }
-        startUp();
+
 
     };
 
@@ -154,22 +146,6 @@ gameFunc = new function () {
     }
     this.toggleSaveControls = toggleSaveControls;
 
-    // Функция для установки/снятия паузы по клику на кнопку в UI во время игры
-    function pauseGameHandler(e) {
-        e.preventDefault();
-        if (playing) {
-            playing = false;
-            paused = true;
-            pause.setAttribute('title', 'Продолжить игру');
-            pause.src = 'img/pause.png';
-        } else if (!playing) {
-            playing = true;
-            paused = false;
-            pause.setAttribute('title', 'Остановить игру');
-            pause.src = 'img/play.png';
-        }
-    }
-
     // Функция для включения/выключения музыкального фона
     function muteHandler(e) {
         e.preventDefault();
@@ -198,16 +174,21 @@ gameFunc = new function () {
         window.location.hash = '#Menu';
     }
 
+
+
+
     // Функции обработчиков событий (управление мышью)
     function mouseMoveHandler(event) {
-        document.body.style.cursor = 'crosshair';
+
+        // document.body.style.cursor = 'crosshair';
         mouseX = event.clientX - cvx;
         mouseY = event.clientY - cvy;
     }
 
     function mouseDownHandler(event) {
+
         mouseIsDown = true;
-    }
+    };
 
     function mouseUpHandler(event) {
         mouseIsDown = false;
@@ -329,18 +310,12 @@ gameFunc = new function () {
 
     // Функция для обновления и отображения текущих свойств игры
     function game() {
-        if (paused) {
-            return;
-        }
-
         // Очищаем игровое поле CANVAS 
         context.clearRect(0, 0, canvas.width, canvas.height);
-        var svelocity = { x: velocity.x, y: velocity.y };
-        var i, j, ilen, jlen;
+        var i, j;
 
         // Обновляем игровое поле и отрисовываем игрока только если игра активна
         if (playing) {
-
             // Клонируем позицию игрока
             pp = player.clonePosition();
 
@@ -349,13 +324,9 @@ gameFunc = new function () {
             player.position.y += (mouseY - player.position.y) * 0.13;
 
             // Инкрементируем получение игровых очков за сложность и перемещение
-            score += 0.1;
-            score += player.distanceTo(pp) * 0.03;
-
-            // Задаём свойство 'продолжительности' игровых бонусов
-            player.fox = Math.max(player.fox - 1, 0);
-            player.rose = Math.max(player.rose - 1, 0);
-            player.box = 0;
+            score += 0.01;
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            // Рисуем игрока
             context.beginPath(); // игрок
             context.fillStyle = '#00ffcc';
             context.shadowColor = '#ffff59';
@@ -369,39 +340,28 @@ gameFunc = new function () {
             gameOver();
         }
 
-        // ЗВЁЗДЫ и их поведение с учетом бонусов игрока в активном статусе игры
+        // пузыри и их поведение с учетом бонусов игрока в активном статусе игры
         for (i = 0; i < bubbles.length; i++) {
             p = bubbles[i];
 
-            if (playing) {
-
-                // Если у игрока нет бонуса и он столкнулся со звездой - взрывается игрок 
-                if (p.distanceTo(player.position) < (player.size + p.size) * 0.5) {
-                    vibro(true); // задаем виброотклик
-                    gameOver();
-                }
-            }
-
-            // Рисуем, позиционируем и задаём перемещение ЗВЁЗД
+            // Рисуем, позиционируем и задаём перемещение пузырей
             context.save();
             context.beginPath();
             context.fillStyle = '#ffff59';
-            context.arc(p.position.x, p.position.y, p.size, 0, 2 * Math.PI, false);
+            context.arc(p.position.x, viewportHeight - p.position.y, p.size, 0, 2 * Math.PI, false);
             context.stroke();
             context.restore();
+            p.position.y += p.size * 0.1;
 
-            p.position.x += svelocity.x;
-            p.position.y += svelocity.y;
-
-            // Если звёзды выходят за игровое поле - они пропадают
+            // Если пузыри выходят за игровое поле - они пропадают
             if (p.position.x < 0 || p.position.y > viewportHeight) {
                 bubbles.splice(i, 1);
                 i--;
             }
         }
 
-        // Если количество звёзд меньше чем сложность игры увеличенная на коэффициент - создаем ещё звёзд
-        if (bubbles.length < 15) {
+        // Если количество пузырей меньше 20 - создаем ещё пузырей
+        if (bubbles.length < 30) {
             bubbles.push(positionNewElement(new Bubble()));
         }
 
@@ -409,10 +369,12 @@ gameFunc = new function () {
         if (playing) {
             scoreText = 'Счёт: ' + Math.round(score);
             checkScore.innerHTML = scoreText;
-            scoreText = ' Время: ' + Math.round(((new Date().getTime() - time) / 1000) * 100) / 100 + 'с';
-            checkTime.innerHTML = scoreText;
         }
-    }
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
+         if (playing) startUp();
+
+    };
 
     // функция для позиционирования новых элементов игры
     function positionNewElement(p) {
@@ -455,4 +417,337 @@ function Bubble() {
 }
 Bubble.prototype = new Element();
 
+//Универсальный класс окружностей
+function Circle(radius) {
+    this.x = randomInt(0, w);
+    this.y = randomInt(0, h);
+    this.dx = randomInt(-2, 2) / 3;
+    this.dx += levelUp()
+    this.dy = randomInt(-2, 2) / 3;
+    this.dy += levelUp()
+    this.radius = radius;
+    this.startRadius = radius;
+    this.hit = false;
+    this.type = "circle";
+    this.alpha = 1
+    this.colour = "rgba(" + randomRGB() + "," + this.alpha + ")";
+    this.max = randomInt(2, 12);
+    this.alive = true;
+    this.draw = function () {
+        this.radius += (1 / 500 * this.startRadius);
+        if (this.radius >= this.startRadius * this.max) { this.alive = false }
+        ctx.fillStyle = this.colour;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.closePath()
+    };
+    this.bounding = function () {
+        if ((this.x + this.radius + this.dx) > w || this.x + this.dx < this.radius) {
+            this.dx = -this.dx;
+            if (this.type == "player") { this.life -= 1; }
+        }
+        if ((this.y + this.radius + this.dy) > h || this.y + this.dy < this.radius) {
+            this.dy = -this.dy;
+            if (this.type == "player") { this.life -= 1; }
+        }
+    };
+    this.move = function () {
+        this.x += this.dx;
+        this.y += this.dy;
+    };
+}
+
+//Класс сердечек
+function SnowFlake() {
+    this.radius = 20;
+    this.x = randomInt(30, w - 30);
+    this.y = -20
+    this.hits = 0
+    this.hit = false
+    this.type = "snowFlake";
+}
+SnowFlake.prototype = new Circle();
+SnowFlake.prototype.move = function () {
+    this.y += .25;
+    if (randomInt(1, 10) < 6) {
+        this.x += 1
+    }
+    else { this.x -= 1 }
+};
+SnowFlake.prototype.draw = function () {
+    ctx.drawImage(snowflake, this.x - 15, this.y - 15, 30, 30)
+};
+SnowFlake.prototype.bounding = function () {
+    if (this.y > (h + 20)) {
+        this.alive = false
+    }
+};
+function dropSnowflake(circleList) {
+    var snowflake = new SnowFlake()
+    circleList.push(snowflake);
+    masterList.push(snowflake);
+};
+
+//Класс игрока2
+function Player2() {
+    this.radius = 20;
+    this.x = h / 2; this.y = w / 2;
+    this.colour = "black";
+    this.alpha = 1
+    this.type = "player2";
+    this.life = 250;
+    this.hits = 0;
+};
+Player2.prototype = new Circle();
+Player2.prototype.move = function () {
+    this.x += ipx / 20
+    this.y += ipy / 20
+};
+Player2.prototype.draw = function () {
+    ctx.fillStyle = this.colour
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.drawImage(santa, this.x - 15, this.y - 15, 30, 30)
+};
+//Класс червяка
+function Present() {
+
+    this.type = "present";
+    this.x = randomInt(25, w - 30);
+    this.y = -20
+};
+Present.prototype = new SnowFlake();
+Present.prototype.draw = function () {
+    ctx.drawImage(present, this.x - 25, this.y - 25, 50, 50)
+};
+function dropPresent(circleList) {
+    var present = new Present();
+    circleList.push(present);
+    masterList.push(present);
+};
+
 gameFunc.init();
+
+var circles = [];
+var player2List = [];
+var started = false;
+var timer = 0;
+var intervals = [];
+var heart = [];
+var presents = [];
+var masterList = [];
+var presentScore = 0;
+var highScore = 0;
+var c = document.getElementById("canvas1");
+c.width = window.innerWidth;
+c.height = window.innerHeight;
+var ctx = c.getContext("2d");
+var w = ctx.canvas.clientWidth;
+var h = ctx.canvas.clientHeight;
+
+function levelUp() {
+    var adjust = timer / 45
+    return adjust
+};
+
+
+
+//формируем лист фигур
+function createCircle(circleList) {
+    var circle = new Circle(randomInt(5, 12));
+    circleList.push(circle);
+    masterList.push(circle);
+};
+//функция сканирования прикосновения объектов
+function scanCollisions() {
+    p = player2List[0];
+    p.hit = false
+    collisionCheck(heart, p);
+    if (p.hit) { p.life += 50; if (p.life > 275) { p.life = 275 } }
+    p.hit = false;
+    collisionCheck(presents, p);
+    if (p.hit) { p.colour = "green"; p.alpha = 1; presentScore += 10 };
+    p.hit = false
+    collisionCheck(circles, p);
+    if (p.hit) { p.colour = "red"; p.alpha = 1; p.life -= 3.5 }
+    else { p.colour = "white"; p.alpha = 0 }
+};
+//функция удаления елементов из листа
+function remove(element, list) {
+    var index = list.indexOf(element);
+    list.splice(index, 1);
+    return list;
+};
+//функция удаления елементов из игры
+function renderCircles(list) {
+    ctx.clearRect(0, 0, w, h);
+    scanCollisions();
+    for (var i = 0; i < list.length; i++) {
+        var item = list[i];
+        if (item.alive == false) {
+            list.splice(i, 1)
+            //удаление из списка
+            if (item.type == "snowFlake") {
+                remove(item, heart)
+            }
+            else if (item.type == "circle") {
+                remove(item, circles)
+            }
+            else if (item.type == "present") {
+                remove(item, presents)
+            }
+        };
+
+        for (var j = 0; j < list.length; j++) {
+            list[j].bounding();
+            list[j].move();
+            list[j].draw();
+        };
+    };
+    p = player2List[0];
+    if (p.life <= 0) {
+        gameOver2();
+    }
+};
+//Слушаем акселерометр
+window.addEventListener('deviceorientation', function (event) {
+    ipx = event.gamma;
+    ipy = event.beta;
+}, true);
+//Функция сброса игры
+function reset() {
+    for (i = 0; i < intervals.length; i++) {
+        clearInterval(intervals[i])
+    }
+    list = [];
+    circles = [];
+    heart = [];
+    player2List = [];
+    masterList = [];
+    presents = [];
+    presentScore = 0;
+    timer = 0;
+    started = false;
+    ctx.clearRect(0, 0, w, h);
+};
+//Запуск игры
+function startUp() {
+    if (started === false) {
+        var newElements = document.getElementsByClassName("data");
+        for (var j = 0; j < newElements.length; j++) {
+            newElements[j].style.visibility = "visible";
+        }
+        var player2 = new Player2();
+        player2List.push(player2);
+        masterList.push(player2)
+        circleDraw = setInterval("renderCircles(masterList)", 20);
+        circleGen = setInterval("createCircle(circles)", 2000);
+        snowDrop = setInterval("dropSnowflake(heart)", 6000);
+        presentDrop = setInterval("dropPresent(presents)", 5000)
+        gameTimer = setInterval("incrementTimer()", 1000);
+        intervals.push(circleGen, circleDraw, gameTimer, snowDrop, presentDrop);
+        started = true;
+    };
+};
+//Увеличиваем счетчик игры
+function incrementTimer() {
+    timer += 1;
+    document.getElementById("timer").innerHTML = ("Счетчик: " + timer + "cек.");
+};
+//Функция столкновений
+function collision(p1x, p1y, r1, p2x, p2y, r2) {
+    var a;
+    var x;
+    var y;
+    a = r1 + r2;
+    x = p1x - p2x;
+    y = p1y - p2y;
+    if (a > Math.sqrt(x * x + y * y)) {
+        return true;
+    } else {
+        return false;
+    }
+};
+//Функция проверки столкновений
+function collisionCheck(circleInput, player2) {
+    var startHits = player2.hits;
+    for (var k = 0; k < circleInput.length; k++) {
+        c = circleInput[k];
+        if (collision(c.x, c.y, c.radius, player2.x, player2.y, player2.radius)) {
+            player2.hits += 1;
+            if (c.type == "snowFlake" || c.type == "present") { c.alive = false }
+        }
+        if (player2.hits > startHits) {
+            player2.hit = true;
+        }
+        else { player2.hit = false; }
+        document.getElementById("score").innerHTML = ("Бонус: " + presentScore);
+        document.getElementById("highscore").innerHTML = ("Рекорд: " + highScore);
+
+        var elem = document.getElementById("life");
+        elem.style.width = player2.life + "px";
+        if (player2.life > 200) { elem.style.background = "green" }
+        else if (player2.life < 200 && player2.life > 100) { elem.style.background = "yellow" }
+        else if (player2.life < 100) { elem.style.background = "red" }
+
+    };
+
+};
+//Конец игры
+function gameOver2() {
+    var total = presentScore + timer;
+    if (total > highScore) {
+        highScore = total
+    }
+    reset();
+    ctx.font = "50px Electrolize"
+    ctx.fillStyle = "white"
+    ctx.fillText("G A M E   O V E R", w / 4 - 30, h / 2 - 70)
+    ctx.fillText("Score: " + total, w / 4 + 50, h / 2 - 10)
+    ctx.fill()
+};
+
+//Подписываемся на вжатие клавиш
+window.addEventListener('keydown', function (EO) {
+    EO = EO || window.event;
+    if (EO.keyCode === 37) {//курсор <
+        ipx -= 10;
+    }
+    if (EO.keyCode === 38) {//курсор ^	
+        ipy -= 10;
+    }
+    if (EO.keyCode === 39) {//курсор >
+        ipx += 10;
+    }
+    if (EO.keyCode === 40) {//курсор v
+        ipy += 10;
+    }
+});
+
+//Подписываемся на отпускание клавиш
+window.addEventListener('keyup', function (EO) {
+    EO = EO || window.event;
+    if (EO.keyCode === 37) {//курсор <
+        ipx = 0;
+    }
+    if (EO.keyCode === 38) {//курсор ^	
+        ipy = 0;
+    }
+    if (EO.keyCode === 39) {//курсор >
+        ipx = 0;
+    }
+    if (EO.keyCode === 40) {//курсор v
+        ipy = 0;
+    }
+});
+//Функция вычисления случайного цвета
+function randomRGB() {
+    var r = function () { return Math.floor(Math.random() * 256) };
+    return r() + "," + r() + "," + r();
+};
+//Функция вычисления случайного числа
+function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};

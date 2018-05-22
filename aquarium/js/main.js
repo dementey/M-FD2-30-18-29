@@ -405,7 +405,7 @@ gameFunc = new function () {
             masterList.push(player2)
             circleDraw = setInterval("renderCircles(masterList)", 20);
             circleGen = setInterval("createCircle(circles)", 2000);
-            snowDrop = setInterval("dropSnowflake(heart)", 6000);
+            snowDrop = setInterval("dropSnowflake(heartt)", 6000);
             wormDrop = setInterval("dropWorm(worms)", 5000)
             gameTimer = setInterval("incrementTimer()", 1000);
             intervals.push(circleGen, circleDraw, gameTimer, snowDrop, wormDrop);
@@ -568,7 +568,7 @@ var player2List = [];
 var started = false;
 var timer = 0;
 var intervals = [];
-var heart = [];
+var heartt = [];
 var worms = [];
 var masterList = [];
 var wormScore = 0;
@@ -595,7 +595,7 @@ function createCircle(circleList) {
 function scanCollisions() {
     p = player2List[0];
     p.hit = false
-    collisionCheck(heart, p);
+    collisionCheck(heartt, p);
     if (p.hit) { p.life += 50; if (p.life > 275) { p.life = 275 } }
     p.hit = false;
     collisionCheck(worms, p);
@@ -621,7 +621,7 @@ function renderCircles(list) {
             list.splice(i, 1)
             //удаление из списка
             if (item.type == "snowFlake") {
-                remove(item, heart)
+                remove(item, heartt)
             }
             else if (item.type == "circle") {
                 remove(item, circles)
@@ -650,7 +650,7 @@ function reset() {
     }
     list = [];
     circles = [];
-    heart = [];
+    heartt = [];
     player2List = [];
     masterList = [];
     worms = [];

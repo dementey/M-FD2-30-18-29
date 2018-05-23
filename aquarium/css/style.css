@@ -63,7 +63,7 @@ canvas {
   text-align: center;
   height: 100%;
   padding: 0.5rem;
-  font-size:1.2rem;
+  font-size:0.7rem;
   border-radius:25px;
 }
 
@@ -154,7 +154,7 @@ canvas {
    margin-top:0.5rem;
    margin-bottom:0.5rem;
    font-family: 'Neucha';
-   font-size: 1.2rem;
+   font-size: 1.1rem;
    color: #ffffff;
    border-size: 1px;
    border-color:  #ffffff;

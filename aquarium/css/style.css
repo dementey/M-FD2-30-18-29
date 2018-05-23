@@ -102,6 +102,8 @@ canvas {
   color: #eeeeee;
 }
 
+#life {position: absolute; height: 10px; width:250px; background: green; }
+
 .ui ul {
   margin: 10px 0 10px 0;
 }
@@ -211,21 +213,7 @@ td {
     font-weight: bold;
 }
 
-/* .data {font-family: Electrolize, sans serif; font-size: 20px; border: 1px solid #ccc; position: absolute; visibility: hidden;} */
 
-/* .intro {visibility: visible}
 
-#title2 {font-family: Electrolize; font-size: 50px; position: absolute; top: 50px; left: 50px;visibility:visible; color: white}
 
-#subheading {font-family: Electrolize; font-size: 40px; position: absolute; right: 250px; top: 350px; visibility:visible; color: white}
-
-#start2 {font-family: Electrolize; font-size: 25px; position: absolute; top: 150px; left: 130px;display: block; width: 200px; height: 200px; background: #B3CCE8; color: white} */
-
-#life {position: absolute; height: 10px; width:250px; background: green; }
-
-/* #background {background:#B3CCE8; width: 100%; height: 100%} */
-/* 
-#introscreen {position: absolute; padding: 5px; width: 100%; height: 100%; visibility: introscreenvisible; background-size: contain; background-repeat: no-repeat;}
-
-#playagain {font-family: Electrolize, sans serif; font-size: 30px; border: 1px solid #ccc; position: absolute; visibility: hidden;margin-left: 640px; top: 350px;} */
 

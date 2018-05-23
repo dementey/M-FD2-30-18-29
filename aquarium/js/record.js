@@ -155,7 +155,8 @@ var records = new function () {
 		if (ResultH.error != undefined) {
 			alert("Извините, таблицы рекордов временно недоступны.\n" + ResultH.error);
 		} else {
-			gameFunc.toggleSaveControls(false);
+			//gameFunc.toggleSaveControls(false);
+			toggleSaveControls(false);
 		}
 	}
 

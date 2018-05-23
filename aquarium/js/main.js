@@ -291,8 +291,8 @@ gameFunc = new function () {
             bubbles = [];
             score = 0;
 
-            player.position.x = mouseX;
-            player.position.y = mouseY;
+            //player.position.x = mouseX;
+            //player.position.y = mouseY;
 
             // Корректируем отображение UI в соответствии с началом игрового процесса
             progress.style.display = 'block';
@@ -343,16 +343,12 @@ gameFunc = new function () {
             player.position.y += (mouseY - player.position.y) * 0.13;
 
             // Инкрементируем получение игровых очков за сложность и перемещение
-            score += 0.01;
-            //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            // Рисуем игрока
-            // context.beginPath(); // игрок
-            // context.fillStyle = '#00ffcc';
-            // context.shadowColor = '#ffff59';
-            // context.arc(player.position.x, player.position.y, player.size / 2, 0, Math.PI * 2, true);
-            // context.fill();
-
-        }
+            score += 0.01;  var total = wormScore + timer;
+            if (total > highScore) {
+                highScore = total;
+                score=highScore;
+            }
+        };
 
         // Если игрок покидает видимые координаты игрового поля - игра прекращается
         if (playing && (player.position.x < 0 || player.position.x > viewportWidth || player.position.y < 0 || player.position.y > viewportHeight)) {
@@ -457,10 +453,7 @@ function gameOver() {
     window.location.hash = '#Menu';
     //gameOver2();
 
-    var total = wormScore + timer;
-    if (total > highScore) {
-        highScore = total
-    }
+  
     reset();
 
 

@@ -221,8 +221,8 @@ gameFunc = new function () {
     // };
 
     window.addEventListener('deviceorientation', function (event) {
-        mouseX = event.gamma;
-        mouseX = event.beta;
+        mouseX = event.gamma - cvx;
+        mouseX = event.beta - cvy;
     }, true);
 
     // Фунция обработчик события изменения размера 

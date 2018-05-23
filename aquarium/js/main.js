@@ -218,8 +218,8 @@ gameFunc = new function () {
     };
     //Событие акселерометра/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function deviceorientationHandler(event) {
-        mouseX = event.gamma;
-        mouseY = event.beta;
+        mouseX = event.gamma- cvx;
+        mouseY = event.beta- cvy;
     };
     // Фунция обработчик события изменения размера 
     function resizeHandler() {

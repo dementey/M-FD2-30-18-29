@@ -93,7 +93,7 @@ gameFunc = new function () {
             window.addEventListener('resize', resizeHandler, false);
             window.addEventListener('orientationchange', resizeHandler, false);
             mute.addEventListener('click', muteHandler, false);
-            document.addEventListener('deviceorientation', deviceorientationHandler, true);
+            document.addEventListener('deviceorientation', touchMoveHandler, true);
             // Инициируем игрока 
             player = new Player();//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // Вызываем функцию принудительного пересчета размеров игрового поля для корректного отображения
@@ -207,20 +207,20 @@ gameFunc = new function () {
     };
     function touchMoveHandler(event) {
         if (event.touches.length == 1) {
-            mouseX = event.touches[0].pageX - cvx;
-            mouseY = event.touches[0].pageY - cvy;
+            mouseX = event.touches[0].pageX - cvx + event.gamma;
+            mouseY = event.touches[0].pageY - cvy + event.beta;
         };
     };
     function touchEndHandler(event) {
         mouseIsDown = false;
     };
     //Событие акселерометра/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    function deviceorientationHandler(event) {
-        event.preventDefault();
-        mouseX = 100 - event.gamma;
-        mouseY = 100- event.beta;
-        mouseIsDown = true;
-    };
+    // function deviceorientationHandler(event) {
+    //     event.preventDefault();
+    //     mouseX = 100 - event.gamma;
+    //     mouseY = 100 - event.beta;
+    //     mouseIsDown = true;
+    // };
     // Фунция обработчик события изменения размера 
     function resizeHandler() {
         var margin,

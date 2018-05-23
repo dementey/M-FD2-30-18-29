@@ -1,46 +1,64 @@
+// Игровая среда CANVAS и её размеры
+var canvas;
+var context;
+var viewportWidth = window.innerWidth;
+var viewportHeight = window.innerHeight;
+var cvx = (window.innerWidth - viewportWidth) * .5;
+var cvy = (window.innerHeight - viewportHeight) * .5;
+
+// Объявляем DOM-элементы UI
+var progress;
+var menu;
+var recordsMenu;
+var recordsButton;
+var storeUserNameButton;
+var backToMenuButton;
+var userName;
+var title;
+var startButton;
+var audio;
+var mute;
+var isLoud = true;
+var checkScore;
+var checkTime;
+var pause;
+
+// Элементы игры  
+var bubbles = [];
+var player;
+var img;
+
+// Свойства определения игровых координат мыши
+var mouseX = (window.innerWidth - viewportWidth);
+var mouseY = (window.innerHeight - viewportHeight);
+var mouseIsDown = false;
+
+// Свойства игры, счета, игрового времени и частоты обновления
+var playing = false;
+var paused = false;
+var score = 0;
+var scoreCounter;
+var frequency = 1000 / 60;
+
+var circles = [];
+var player2List = [];
+var started = false;
+var timer = 0;
+var intervals = [];
+var heartt = [];
+var worms = [];
+var masterList = [];
+var wormScore = 0;
+var highScore = 0;
+var c = document.getElementById("canvas1");
+c.width = window.innerWidth;
+c.height = window.innerHeight;
+var ctx = c.getContext("2d");
+var w = ctx.canvas.clientWidth;
+var h = ctx.canvas.clientHeight;
+
 gameFunc = new function () {
-   
-    // Игровая среда CANVAS и её размеры
-    var canvas;
-    var context;
-    var viewportWidth = window.innerWidth;
-    var viewportHeight = window.innerHeight;
-    var cvx = (window.innerWidth - viewportWidth) * .5;
-    var cvy = (window.innerHeight - viewportHeight) * .5;
-    
-    // Объявляем DOM-элементы UI
-    var progress;
-    var menu;
-    var recordsMenu;
-    var recordsButton;
-    var storeUserNameButton;
-    var backToMenuButton;
-    var userName;
-    var title;
-    var startButton;
-    var audio;
-    var mute;
-    var isLoud = true;
-    var checkScore;
-    var checkTime;
-    var pause;
-   
-    // Элементы игры  
-    var bubbles = [];
-    var player;
-    var img;
-   
-    // Свойства определения игровых координат мыши
-    var mouseX = (window.innerWidth - viewportWidth);
-    var mouseY = (window.innerHeight - viewportHeight);
-    var mouseIsDown = false;
-   
-    // Свойства игры, счета, игрового времени и частоты обновления
-    var playing = false;
-    var paused = false;
-    var score = 0;
-    var scoreCounter;
-    var frequency = 1000 / 60;
+
 
     // Функция-'конструктор' игры
     this.init = function () {
@@ -414,12 +432,15 @@ gameFunc = new function () {
         };
     };
 
-
-    //---------------------------------------------------------------------------------------------------------------------------------------------
-
-
 };
 
+
+
+
+
+
+
+//К_Л_А_С_С_Ы__Н_А_Ч_А_Л_О//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Описываем класс cоздания новых элементов
 function Element(x, y) {
     this.position = { x: x, y: y };
@@ -561,28 +582,41 @@ function dropWorm(circleList) {
     masterList.push(worm);
 };
 
+//К_Л_А_С_С_Ы__К_О_Н_Е_Ц/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
 gameFunc.init();
 
-var circles = [];
-var player2List = [];
-var started = false;
-var timer = 0;
-var intervals = [];
-var heartt = [];
-var worms = [];
-var masterList = [];
-var wormScore = 0;
-var highScore = 0;
-var c = document.getElementById("canvas1");
-c.width = window.innerWidth;
-c.height = window.innerHeight;
-var ctx = c.getContext("2d");
-var w = ctx.canvas.clientWidth;
-var h = ctx.canvas.clientHeight;
+
+
+
+
+
+
+
+//Ф_У_Н_К_Ц_И_И__Н_А_Ч_А_Л_О///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function levelUp() {
     var adjust = timer / 45
     return adjust
+};
+
+//Конец игры
+function gameOver2() {
+    gameOver();
+    var total = wormScore + timer;
+    if (total > highScore) {
+        highScore = total
+    }
+    reset();
+    ctx.font = "50px Electrolize"
+    ctx.fillStyle = "white"
+    ctx.fillText("G A M E   O V E R", w / 4 - 30, h / 2 - 70)
+    ctx.fillText("Score: " + total, w / 4 + 50, h / 2 - 10)
+    ctx.fill()
 };
 
 //формируем лист фигур
@@ -591,6 +625,7 @@ function createCircle(circleList) {
     circleList.push(circle);
     masterList.push(circle);
 };
+
 //функция сканирования прикосновения объектов
 function scanCollisions() {
     p = player2List[0];
@@ -605,12 +640,14 @@ function scanCollisions() {
     if (p.hit) { p.colour = "red"; p.alpha = 1; p.life -= 3.5 }
     else { p.colour = "white"; p.alpha = 0 }
 };
+
 //функция удаления елементов из листа
 function remove(element, list) {
     var index = list.indexOf(element);
     list.splice(index, 1);
     return list;
 };
+
 //функция удаления елементов из игры
 function renderCircles(list) {
     ctx.clearRect(0, 0, w, h);
@@ -666,6 +703,7 @@ function incrementTimer() {
     timer += 1;
     document.getElementById("timer").innerHTML = ("Счетчик: " + timer + "cек.");
 };
+
 //Функция столкновений
 function collision(p1x, p1y, r1, p2x, p2y, r2) {
     var a;
@@ -680,6 +718,7 @@ function collision(p1x, p1y, r1, p2x, p2y, r2) {
         return false;
     }
 };
+
 //Функция проверки столкновений
 function collisionCheck(circleInput, player2) {
     var startHits = player2.hits;
@@ -705,20 +744,24 @@ function collisionCheck(circleInput, player2) {
     };
 
 };
-//Конец игры
-function gameOver2() {
-    gameOver();
-    var total = wormScore + timer;
-    if (total > highScore) {
-        highScore = total
-    }
-    reset();
-    ctx.font = "50px Electrolize"
-    ctx.fillStyle = "white"
-    ctx.fillText("G A M E   O V E R", w / 4 - 30, h / 2 - 70)
-    ctx.fillText("Score: " + total, w / 4 + 50, h / 2 - 10)
-    ctx.fill()
+
+//Функция вычисления случайного цвета
+function randomRGB() {
+    var r = function () { return Math.floor(Math.random() * 256) };
+    return r() + "," + r() + "," + r();
 };
+//Функция вычисления случайного числа
+function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+//Ф_У_Н_К_Ц_И_И__К_О_Н_Е_Ц///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
 
 //Слушаем акселерометр
 // window.addEventListener('deviceorientation', function (event) {
@@ -759,12 +802,4 @@ function gameOver2() {
 //         ipy = 0;
 //     }
 // });
-//Функция вычисления случайного цвета
-function randomRGB() {
-    var r = function () { return Math.floor(Math.random() * 256) };
-    return r() + "," + r() + "," + r();
-};
-//Функция вычисления случайного числа
-function randomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+

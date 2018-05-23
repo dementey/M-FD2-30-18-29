@@ -96,7 +96,7 @@ gameFunc = new function () {
             window.addEventListener('orientationchange', resizeHandler, false);
             mute.addEventListener('click', muteHandler, false);
             // Инициируем игрока 
-            player = new Player();
+            player = new Player();//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // Вызываем функцию принудительного пересчета размеров игрового поля для корректного отображения
             resizeHandler();
             // Устанавливаем интервал перерисовки
@@ -215,7 +215,11 @@ gameFunc = new function () {
     function touchEndHandler(event) {
         mouseIsDown = false;
     };
-
+    //-----------------------------------------------------------------------------------
+    window.addEventListener('deviceorientation', function (event) {
+        mouseX = event.gamma;
+        mouseY = event.beta;
+    }, true);
     // Фунция обработчик события изменения размера 
     function resizeHandler() {
         var margin,

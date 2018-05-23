@@ -15,7 +15,7 @@ var storeUserNameButton;
 var backToMenuButton;
 var userName;
 var title;
-var startButton; 
+var startButton;
 var audio;
 var mute;
 var isLoud = true;
@@ -218,8 +218,9 @@ gameFunc = new function () {
     };
     //Событие акселерометра/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function deviceorientationHandler(event) {
-        mouseX = event.gamma- cvx;
-        mouseY = event.beta- cvy;
+        event.preventDefault();
+        mouseX = cvx - event.gamma;
+        mouseY = cvy - event.beta;
     };
     // Фунция обработчик события изменения размера 
     function resizeHandler() {

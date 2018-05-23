@@ -93,7 +93,7 @@ gameFunc = new function () {
             window.addEventListener('resize', resizeHandler, false);
             window.addEventListener('orientationchange', resizeHandler, false);
             mute.addEventListener('click', muteHandler, false);
-            document.addEventListener('deviceorientation', touchMoveHandler, true);
+            window.addEventListener('deviceorientation', touchMoveHandler, true);
             // Инициируем игрока 
             player = new Player();//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // Вызываем функцию принудительного пересчета размеров игрового поля для корректного отображения

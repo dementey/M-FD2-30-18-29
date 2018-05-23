@@ -102,7 +102,8 @@ gameFunc = new function () {
             window.addEventListener('deviceorientation', function (event) {
                 console.log(viewportWidth+'!'+viewportHeight);
                 mouseX = viewportWidth * 0.5 + event.gamma;
-                mouseX = viewportHeight * 0.5 + event.beta;
+                mouseY = viewportHeight * 0.5 + event.beta;
+
             }, true);
             // Устанавливаем интервал перерисовки
             window.setInterval(game, frequency);

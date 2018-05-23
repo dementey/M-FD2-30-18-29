@@ -5,7 +5,6 @@ var viewportWidth = window.innerWidth;
 var viewportHeight = window.innerHeight;
 var cvx = (window.innerWidth - viewportWidth) * .5;
 var cvy = (window.innerHeight - viewportHeight) * .5;
-
 // Объявляем DOM-элементы
 var progress;
 var menu;
@@ -32,7 +31,6 @@ var img;
 var mouseX = (window.innerWidth - viewportWidth);
 var mouseY = (window.innerHeight - viewportHeight);
 var mouseIsDown = false;
-
 // Свойства игры, счета, игрового времени и частоты обновления
 var playing = false;
 var paused = false;
@@ -95,7 +93,7 @@ gameFunc = new function () {
             window.addEventListener('resize', resizeHandler, false);
             window.addEventListener('orientationchange', resizeHandler, false);
             mute.addEventListener('click', muteHandler, false);
-            document.addEventListener('deviceorientation', deviceorientationHandler, false);
+            document.addEventListener('deviceorientation', deviceorientationHandler, true);
             // Инициируем игрока 
             player = new Player();//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // Вызываем функцию принудительного пересчета размеров игрового поля для корректного отображения
@@ -219,8 +217,8 @@ gameFunc = new function () {
     //Событие акселерометра/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function deviceorientationHandler(event) {
         event.preventDefault();
-        mouseX = 100; //- event.gamma*0.5;
-        mouseY = 100; //- event.beta*0.5;
+        mouseX = viewportWidth/2 - event.gamma*0.5;
+        mouseY = viewportHeight/2- event.beta*0.5;
         mouseIsDown = true;
     };
     // Фунция обработчик события изменения размера 

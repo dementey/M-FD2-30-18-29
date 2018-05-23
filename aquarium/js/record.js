@@ -1,5 +1,5 @@
 var records = new function () {
-	var StringName = '1_TOR';
+	var StringName = 'HAIDUK_AQUARIUMGAME_TOR';//var StringName = '1_TOR';
 	var password; //переменная для хранения пароля
 	var AjaxHandlerScript = "https://fe.it-academy.by/AjaxStringStorage2.php";
 	var recordsLength = 10;

@@ -217,8 +217,8 @@ gameFunc = new function () {
     };
     //Событие акселерометра
     function deviceorientationHandler(event) {
-        mouseX += event.gamma;
-        mouseY += event.beta;
+        mouseX += event.gamma*0.1;
+        mouseY += event.beta*0.1;
     };
 
 

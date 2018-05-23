@@ -6,7 +6,7 @@ var viewportHeight = window.innerHeight;
 var cvx = (window.innerWidth - viewportWidth) * .5;
 var cvy = (window.innerHeight - viewportHeight) * .5;
 
-// Объявляем DOM-элементы UI
+// Объявляем DOM-элементы
 var progress;
 var menu;
 var recordsMenu;
@@ -57,12 +57,11 @@ var ctx = c.getContext("2d");
 var w = ctx.canvas.clientWidth;
 var h = ctx.canvas.clientHeight;
 var player2;
-//var gameOverr;
+
 gameFunc = new function () {
 
-    // Функция-'конструктор' игры
+    // Конструктор игры
     this.init = function () {
-
         // Находим необходимые DOM-элементы  
         canvas = document.getElementById('cvs');
         progress = document.getElementById('progress');
@@ -81,10 +80,8 @@ gameFunc = new function () {
         audio = document.getElementById('audio');
         mute = document.getElementById('mute');
         scoreCounter = document.getElementById('scoreCounter');
-
         if (canvas && canvas.getContext) {
             context = canvas.getContext('2d');
-
             // Устанавливаем слушателей событий
             document.addEventListener('mousemove', mouseMoveHandler, false);
             document.addEventListener('mousedown', mouseDownHandler, false);
@@ -98,45 +95,35 @@ gameFunc = new function () {
             window.addEventListener('resize', resizeHandler, false);
             window.addEventListener('orientationchange', resizeHandler, false);
             mute.addEventListener('click', muteHandler, false);
-
             // Инициируем игрока 
             player = new Player();
-
-            // Вызываем функцию принудительного пересчета размеров игрового поля для корректного отображения UI
+            // Вызываем функцию принудительного пересчета размеров игрового поля для корректного отображения
             resizeHandler();
-
             // Устанавливаем интервал перерисовки
             window.setInterval(game, frequency);
         }
     };
-
-
-
+    //Остановка игры
     this.stopGame = function () {
         if (playing) {
             playing = false;
-        }
-
+        };
         resizeHandler();
     };
-
+    //состояние игры
     this.isPlaying = function () {
         return playing;
     };
-
+    //запрашиваем таблицу рекордов
     this.showRecords = function () {
         this.stopGame();
         records.getHighscores();
     };
-
     // Добавляем результат игрока по клику
     function storeUserNameButtonHandler(e) {
         e.preventDefault(e);
         records.addNewResult(userName.value, score);
-    }
-
-
-
+    };
     // Функция для включения/выключения музыкального фона
     function muteHandler(e) {
         e.preventDefault();
@@ -150,30 +137,22 @@ gameFunc = new function () {
             audio.play();
             isLoud = true;
             mute.setAttribute('title', 'Выключить музыку');
-        }
-    }
-
-
-
+        };
+    };
     // Функции обработчиков событий (управление мышью)
     function mouseMoveHandler(event) {
         mouseX = event.clientX - cvx;
         mouseY = event.clientY - cvy;
-    }
-
+    };
     function mouseDownHandler(event) {
-
         mouseIsDown = true;
     };
-
     function mouseUpHandler(event) {
         mouseIsDown = false;
-    }
-
+    };
     // Функции обработчиков событий (управление клавиатурой)
     function keyDownHandler(e) {
         e = e || window.event;
-
         switch (e.keyCode) {
             case 37:
                 mouseX -= 15;
@@ -195,12 +174,10 @@ gameFunc = new function () {
                 mouseIsDown = true;
                 e.preventDefault();
                 break;
-        }
-    }
-
+        };
+    };
     function keyUpHandler(e) {
         e = e || window.event;
-
         switch (e.keyCode) {
             case 37:
                 mouseIsDown = false;
@@ -218,55 +195,44 @@ gameFunc = new function () {
                 mouseIsDown = false;
                 e.preventDefault();
                 break;
-        }
-    }
-
+        };
+    };
     // Функции обработчиков тач-событий (тач-управление)
     function touchStartHandler(event) {
         if (event.touches.length == 1) {
             event.preventDefault();
-
             mouseX = event.touches[0].pageX - cvx;
             mouseY = event.touches[0].pageY - cvy;
-
             mouseIsDown = true;
-        }
-    }
-
+        };
+    };
     function touchMoveHandler(event) {
         if (event.touches.length == 1) {
-
             mouseX = event.touches[0].pageX - cvx;
             mouseY = event.touches[0].pageY - cvy;
-        }
-    }
-
+        };
+    };
     function touchEndHandler(event) {
         mouseIsDown = false;
-    }
+    };
 
     // Фунция обработчик события изменения размера 
     function resizeHandler() {
         var margin,
             desiredMenuWidth = 500;
-
         // Определяем игровое поле, присваиваем и позиционируем CANVAS в соответсвии с новыми размерами
         viewportWidth = window.innerWidth;
         viewportHeight = window.innerHeight;
-
         canvas.width = viewportWidth;
         canvas.height = viewportHeight;
-
         canvas.style.position = 'absolute';
         canvas.style.left = cvx + 'px';
         canvas.style.top = cvy + 'px';
-
-        // Корректируем отображение UI
+        // Корректируем отображение
         margin = Math.max(cvx + (viewportWidth - desiredMenuWidth) / 2, 0);
         menu.style.marginLeft = margin + 'px';
         menu.style.marginRight = margin + 'px';
         menu.style.marginTop = Math.max(0, (viewportHeight - menu.getBoundingClientRect().height) / 2) + 'px';
-
         recordsMenu.style.marginLeft = margin + 'px';
         recordsMenu.style.marginRight = margin + 'px';
         recordsMenu.style.marginTop = Math.max(0, (viewportHeight - recordsMenu.getBoundingClientRect().height) / 2) + 'px';
@@ -279,35 +245,28 @@ gameFunc = new function () {
                 window.navigator.vibrate([100, 50, 100]);
             } else {
                 window.navigator.vibrate(150);
-            }
-        }
-    }
-    // Метод запуска игры по клику на кнопку СТАРТ в UI
+            };
+        };
+    };
+    // Метод запуска игры по клику на кнопку СТАРТ в
     this.startGame = function () {
         if (playing == false) {
             playing = true;
-
             // Обновляем игровые свойства
             bubbles = [];
             score = 0;
-
-            //player.position.x = mouseX;
-            //player.position.y = mouseY;
-
-            // Корректируем отображение UI в соответствии с началом игрового процесса
+            // Корректируем отображение в соответствии с началом игрового процесса
             progress.style.display = 'block';
-
             if (!isLoud) {
                 audio.pause();
             } else {
                 audio.play();
-            }
-
+            };
             if (playing == true) {
                 var newElements = document.getElementsByClassName("data");
                 for (var j = 0; j < newElements.length; j++) {
                     newElements[j].style.visibility = "visible";
-                }
+                };
                 player2 = new Player2();
                 player2.x = mouseX;
                 player2.y = mouseY;
@@ -320,46 +279,34 @@ gameFunc = new function () {
                 gameTimer = setInterval("incrementTimer()", 1000);
                 intervals.push(circleGen, circleDraw, gameTimer, heartDropp, wormDrop);
                 started = true;
-                //console.log(player2);
             };
-
-        }
-
-
+        };
     };
     // Функция для обновления и отображения текущих свойств игры
     function game() {
         // Очищаем игровое поле CANVAS 
         context.clearRect(0, 0, canvas.width, canvas.height);
         var i, j;
-
         // Обновляем игровое поле и отрисовываем игрока только если игра активна
         if (playing) {
-            // Клонируем позицию игрока
-            //pp = player.clonePosition();
-
             // Задаём задержку перемещения игрока
             player.position.x += (mouseX - player.position.x) * 0.13;
             player.position.y += (mouseY - player.position.y) * 0.13;
-
             // Инкрементируем получение игровых очков за сложность и перемещение
-            score += 0.01;  var total = wormScore + timer;
+            var total = wormScore + timer;
             if (total > highScore) {
                 highScore = total;
-                score=highScore;
-            }
+                score = highScore;
+            };
         };
-
-        // Если игрок покидает видимые координаты игрового поля - игра прекращается
+        // Если игрок покидает видимые координаты игрового поля - игра прекращается1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
         if (playing && (player.position.x < 0 || player.position.x > viewportWidth || player.position.y < 0 || player.position.y > viewportHeight)) {
             vibro(true); // задаем виброотклик
             gameOver();
-        }
-
-        // пузыри и их поведение с учетом бонусов игрока в активном статусе игры
+        };
+        //Пузыри и их поведение с учетом бонусов игрока в активном статусе игры
         for (i = 0; i < bubbles.length; i++) {
             p = bubbles[i];
-
             // Рисуем, позиционируем и задаём перемещение пузырей
             context.save();
             context.beginPath();
@@ -368,19 +315,16 @@ gameFunc = new function () {
             context.stroke();
             context.restore();
             p.position.y += p.size * 0.1;
-
             // Если пузыри выходят за игровое поле - они пропадают
             if (p.position.x < 0 || p.position.y > viewportHeight) {
                 bubbles.splice(i, 1);
                 i--;
-            }
-        }
-
+            };
+        };
         // Если количество пузырей меньше 20 - создаем ещё пузырей
         if (bubbles.length < 30) {
             bubbles.push(positionNewElement(new Bubble()));
-        }
-
+        };
         // Обновляем и отображаем текущие игровые показатели активной игры    
         if (playing) {
             scoreText = 'Счёт: ' + Math.round(score);
@@ -390,10 +334,6 @@ gameFunc = new function () {
             player2.x = mouseX;
             player2.y = mouseY;
         }
-
-        //console.log(player2);
-
-
     };
 
     // функция для позиционирования новых элементов игры
@@ -407,63 +347,8 @@ gameFunc = new function () {
             p.position.y = (-viewportHeight * 0.2) + (Math.random() * viewportHeight * 1.2);
         }
         return p;
-    }
-
-
-    //---------------------------------------------------------------------------------------------------------------------------------------------
-
-    //Запуск игры
-    // function startUp(xx, yy) {
-
-    //     if (started === false) {
-    //         var newElements = document.getElementsByClassName("data");
-    //         for (var j = 0; j < newElements.length; j++) {
-    //             newElements[j].style.visibility = "visible";
-    //         }
-    //         var player2 = new Player2();
-    //         player2.x = xx;
-    //         player2.y = yy;
-    //         //console.log(player2);
-    //         player2List.push(player2);
-    //         masterList.push(player2)
-    //         circleDraw = setInterval("renderCircles(masterList)", 20);
-    //         circleGen = setInterval("createCircle(circles)", 2000);
-    //         heartDropp = setInterval("dropHeart(heartt)", 6000);
-    //         wormDrop = setInterval("dropWorm(worms)", 5000)
-    //         gameTimer = setInterval("incrementTimer()", 1000);
-    //         intervals.push(circleGen, circleDraw, gameTimer, heartDropp, wormDrop);
-    //         started = true;
-
-    //     };
-    // };
-
+    };
 };
-
-
-
-// Функция останавливает текущую игру и выводит её результат
-function gameOver() {
-    playing = false;
-
-    // Корректируем отображение UI в соответствии с окончанием игрового процесса
-    toggleSaveControls(true);
-
-    title.innerHTML = 'Игра окончена! (Вы набрали: ' + Math.round(score) + ' очков)';
-
-    window.location.hash = '#Menu';
-    //gameOver2();
-
-  
-    reset();
-
-
-}
-
-function toggleSaveControls(show) {
-    userName.style.display = show ? 'block' : 'none';
-    storeUserNameButton.style.display = show ? 'block' : 'none';
-}
-this.toggleSaveControls = toggleSaveControls;
 
 //К_Л_А_С_С_Ы__Н_А_Ч_А_Л_О//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Описываем класс cоздания новых элементов
@@ -567,7 +452,7 @@ function dropHeart(circleList) {
     masterList.push(heart);
 };
 
-//Класс игрока2
+//Класс игрока
 function Player2() {
     this.radius = 20;
     //this.x = h / 2; this.y = w / 2;
@@ -606,51 +491,36 @@ function dropWorm(circleList) {
     circleList.push(worm);
     masterList.push(worm);
 };
-
 //К_Л_А_С_С_Ы__К_О_Н_Е_Ц/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
 
 gameFunc.init();
 
-
-
-
-
-
-
-
 //Ф_У_Н_К_Ц_И_И__Н_А_Ч_А_Л_О///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+// Функция останавливает текущую игру и выводит её результат
+function gameOver() {
+    playing = false;
+    // Корректируем отображение в соответствии с окончанием игрового процесса
+    toggleSaveControls(true);
+    title.innerHTML = 'Игра окончена! (Вы набрали: ' + Math.round(score) + ' очков)';
+    window.location.hash = '#Menu';
+    //gameOver2();
+    reset();
+};
+function toggleSaveControls(show) {
+    userName.style.display = show ? 'block' : 'none';
+    storeUserNameButton.style.display = show ? 'block' : 'none';
+};
+//уровни
 function levelUp() {
     var adjust = timer / 45
     return adjust
 };
-
-//Конец игры
-// function gameOver2() {
-//     //gameOver();
-//     var total = wormScore + timer;
-//     if (total > highScore) {
-//         highScore = total
-//     }
-//     reset();
-//     ctx.font = "50px Electrolize"
-//     ctx.fillStyle = "white"
-//     ctx.fillText("G A M E   O V E R", w / 4 - 30, h / 2 - 70)
-//     ctx.fillText("Score: " + total, w / 4 + 50, h / 2 - 10)
-//     ctx.fill()
-// };
-
 //формируем лист фигур
 function createCircle(circleList) {
     var circle = new Circle(randomInt(5, 12));
     circleList.push(circle);
     masterList.push(circle);
 };
-
 //функция сканирования прикосновения объектов
 function scanCollisions() {
     p = player2List[0];
@@ -665,14 +535,12 @@ function scanCollisions() {
     if (p.hit) { p.colour = "red"; p.alpha = 1; p.life -= 3.5 }
     else { p.colour = "white"; p.alpha = 0 }
 };
-
 //функция удаления елементов из листа
 function remove(element, list) {
     var index = list.indexOf(element);
     list.splice(index, 1);
     return list;
 };
-
 //функция удаления елементов из игры
 function renderCircles(list) {
     ctx.clearRect(0, 0, w, h);
@@ -705,12 +573,11 @@ function renderCircles(list) {
         gameOver();
     }
 };
-
 //Функция сброса игры
 function reset() {
     for (i = 0; i < intervals.length; i++) {
         clearInterval(intervals[i])
-    }
+    };
     list = [];
     circles = [];
     heartt = [];
@@ -723,13 +590,11 @@ function reset() {
     var xx, yy;
     ctx.clearRect(0, 0, w, h);
 };
-
 //Увеличиваем счетчик игры
 function incrementTimer() {
     timer += 1;
     document.getElementById("timer").innerHTML = ("Счетчик: " + timer + "cек.");
 };
-
 //Функция столкновений
 function collision(p1x, p1y, r1, p2x, p2y, r2) {
     var a;
@@ -744,7 +609,6 @@ function collision(p1x, p1y, r1, p2x, p2y, r2) {
         return false;
     }
 };
-
 //Функция проверки столкновений
 function collisionCheck(circleInput, player2) {
     var startHits = player2.hits;
@@ -770,7 +634,6 @@ function collisionCheck(circleInput, player2) {
     };
 
 };
-
 //Функция вычисления случайного цвета
 function randomRGB() {
     var r = function () { return Math.floor(Math.random() * 256) };
@@ -780,7 +643,6 @@ function randomRGB() {
 function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
-
 //Ф_У_Н_К_Ц_И_И__К_О_Н_Е_Ц///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

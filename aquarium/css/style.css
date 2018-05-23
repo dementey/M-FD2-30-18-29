@@ -37,7 +37,7 @@ body {
   font-family: 'Neucha';
   color: #333333;
   font-size: 11px;
-  background: #3d85c4;
+  background: 	#00BFFF;
 }
 
 canvas {
@@ -121,8 +121,8 @@ canvas {
 }
 
 .ui a:hover {
-  color: #ffff59;
-  background-color: #3d85c4;
+  color: #ADFF2F;
+  background-color: 		#00BFFF;
 }
 
 #progress #pause, #progress #mute {
@@ -139,9 +139,9 @@ canvas {
    border-radius: 25px;
    margin: 0 auto;
    font-family: 'Neucha';
-   background-color: rgba(42, 94, 140,0);
+   background-color: 		#00BFFF;
    font-size: 16px;
-   color: #ffff59;
+   color: #ADFF2F;
    border : 1.5px solid;
    border-color: #ffffff;
 }
@@ -166,8 +166,8 @@ canvas {
 }
 
 #showRecords:hover, #backToMenu:hover {
-   color: #ffff59;
-   background-color: #3d85c4;
+   color: #ADFF2F;
+   background-color: 		#00BFFF;
 }
 
 #pause:hover {
@@ -186,7 +186,7 @@ canvas {
   width: 100%;
   height: 100%;
   overflow: visible;
-  background: #3d85c4 url('../img/logo.png') no-repeat center center;
+  background: 	#00BFFF url('../img/logo.png') no-repeat center center;
   background-size: contain;
 }
 
@@ -204,8 +204,8 @@ table, th, td {
 th {
    font-family: 'Neucha';
    font-size: 1rem;
-   color: #ffff59;
-   background-color: #3d85c4;
+   color: #ADFF2F;
+   background-color: 		#00BFFF;
    
 }
 

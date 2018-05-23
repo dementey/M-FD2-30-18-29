@@ -207,20 +207,20 @@ gameFunc = new function () {
     };
     function touchMoveHandler(event) {
         if (event.touches.length == 1) {
-            mouseX = event.touches[0].pageX - cvx + event.gamma;
-            mouseY = event.touches[0].pageY - cvy + event.beta;
+            mouseX = event.touches[0].pageX - cvx;
+            mouseY = event.touches[0].pageY - cvy;
         };
     };
     function touchEndHandler(event) {
         mouseIsDown = false;
     };
     //Событие акселерометра/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // function deviceorientationHandler(event) {
-    //     event.preventDefault();
-    //     mouseX = 100 - event.gamma;
-    //     mouseY = 100 - event.beta;
-    //     mouseIsDown = true;
-    // };
+    function deviceorientationHandler(event) {
+        event.preventDefault();
+        mouseX += event.gamma;
+        mouseY += event.beta;
+        mouseIsDown = true;
+    };
     // Фунция обработчик события изменения размера 
     function resizeHandler() {
         var margin,

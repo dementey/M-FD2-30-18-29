@@ -56,9 +56,9 @@ c.height = window.innerHeight;
 var ctx = c.getContext("2d");
 var w = ctx.canvas.clientWidth;
 var h = ctx.canvas.clientHeight;
-
+var player2;
+//var gameOverr;
 gameFunc = new function () {
-
 
     // Функция-'конструктор' игры
     this.init = function () {
@@ -110,30 +110,7 @@ gameFunc = new function () {
         }
     };
 
-    // Метод запуска игры по клику на кнопку СТАРТ в UI
-    this.startGame = function () {
-        if (playing == false) {
-            playing = true;
 
-            // Обновляем игровые свойства
-            bubbles = [];
-            score = 0;
-
-            player.position.x = mouseX;
-            player.position.y = mouseY;
-
-            // Корректируем отображение UI в соответствии с началом игрового процесса
-            progress.style.display = 'block';
-
-            if (!isLoud) {
-                audio.pause();
-            } else {
-                audio.play();
-            }
-        }
-
-
-    };
 
     this.stopGame = function () {
         if (playing) {
@@ -158,11 +135,7 @@ gameFunc = new function () {
         records.addNewResult(userName.value, score);
     }
 
-    function toggleSaveControls(show) {
-        userName.style.display = show ? 'block' : 'none';
-        storeUserNameButton.style.display = show ? 'block' : 'none';
-    }
-    this.toggleSaveControls = toggleSaveControls;
+
 
     // Функция для включения/выключения музыкального фона
     function muteHandler(e) {
@@ -180,17 +153,7 @@ gameFunc = new function () {
         }
     }
 
-    // Функция останавливает текущую игру и выводит её результат
-    function gameOver() {
-        playing = false;
 
-        // Корректируем отображение UI в соответствии с окончанием игрового процесса
-        toggleSaveControls(true);
-
-        title.innerHTML = 'Игра окончена! (Вы набрали: ' + Math.round(score) + ' очков)';
-
-        window.location.hash = '#Menu';
-    }
 
     // Функции обработчиков событий (управление мышью)
     function mouseMoveHandler(event) {
@@ -319,7 +282,51 @@ gameFunc = new function () {
             }
         }
     }
+    // Метод запуска игры по клику на кнопку СТАРТ в UI
+    this.startGame = function () {
+        if (playing == false) {
+            playing = true;
 
+            // Обновляем игровые свойства
+            bubbles = [];
+            score = 0;
+
+            player.position.x = mouseX;
+            player.position.y = mouseY;
+
+            // Корректируем отображение UI в соответствии с началом игрового процесса
+            progress.style.display = 'block';
+
+            if (!isLoud) {
+                audio.pause();
+            } else {
+                audio.play();
+            }
+
+            if (playing == true) {
+                var newElements = document.getElementsByClassName("data");
+                for (var j = 0; j < newElements.length; j++) {
+                    newElements[j].style.visibility = "visible";
+                }
+                player2 = new Player2();
+                player2.x = mouseX;
+                player2.y = mouseY;
+                player2List.push(player2);
+                masterList.push(player2)
+                circleDraw = setInterval("renderCircles(masterList)", 20);
+                circleGen = setInterval("createCircle(circles)", 2000);
+                heartDropp = setInterval("dropHeart(heartt)", 6000);
+                wormDrop = setInterval("dropWorm(worms)", 5000)
+                gameTimer = setInterval("incrementTimer()", 1000);
+                intervals.push(circleGen, circleDraw, gameTimer, heartDropp, wormDrop);
+                started = true;
+                //console.log(player2);
+            };
+
+        }
+
+
+    };
     // Функция для обновления и отображения текущих свойств игры
     function game() {
         // Очищаем игровое поле CANVAS 
@@ -329,7 +336,7 @@ gameFunc = new function () {
         // Обновляем игровое поле и отрисовываем игрока только если игра активна
         if (playing) {
             // Клонируем позицию игрока
-            pp = player.clonePosition();
+            //pp = player.clonePosition();
 
             // Задаём задержку перемещения игрока
             player.position.x += (mouseX - player.position.x) * 0.13;
@@ -339,11 +346,11 @@ gameFunc = new function () {
             score += 0.01;
             //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             // Рисуем игрока
-            context.beginPath(); // игрок
-            context.fillStyle = '#00ffcc';
-            context.shadowColor = '#ffff59';
-            context.arc(player.position.x, player.position.y, player.size / 2, 0, Math.PI * 2, true);
-            context.fill();
+            // context.beginPath(); // игрок
+            // context.fillStyle = '#00ffcc';
+            // context.shadowColor = '#ffff59';
+            // context.arc(player.position.x, player.position.y, player.size / 2, 0, Math.PI * 2, true);
+            // context.fill();
 
         }
 
@@ -384,11 +391,13 @@ gameFunc = new function () {
             checkScore.innerHTML = scoreText;
         }
         if (playing) {
-            startUp(player.position.x, player.position.y);
-            // console.log(temp);
+            player2.x = mouseX;
+            player2.y = mouseY;
         }
-        xx = player.position.x;
-        yy = player.position.y;
+
+        //console.log(player2);
+
+
     };
 
     // функция для позиционирования новых элементов игры
@@ -408,37 +417,60 @@ gameFunc = new function () {
     //---------------------------------------------------------------------------------------------------------------------------------------------
 
     //Запуск игры
-    function startUp(xx, yy) {
+    // function startUp(xx, yy) {
 
-        if (started === false) {
-            var newElements = document.getElementsByClassName("data");
-            for (var j = 0; j < newElements.length; j++) {
-                newElements[j].style.visibility = "visible";
-            }
-            var player2 = new Player2();
-            player2.x = xx;
-            player2.y = yy;
-            //console.log(player2);
-            player2List.push(player2);
-            masterList.push(player2)
-            circleDraw = setInterval("renderCircles(masterList)", 20);
-            circleGen = setInterval("createCircle(circles)", 2000);
-            heartDropp = setInterval("dropHeart(heartt)", 6000);
-            wormDrop = setInterval("dropWorm(worms)", 5000)
-            gameTimer = setInterval("incrementTimer()", 1000);
-            intervals.push(circleGen, circleDraw, gameTimer, heartDropp, wormDrop);
-            started = true;
+    //     if (started === false) {
+    //         var newElements = document.getElementsByClassName("data");
+    //         for (var j = 0; j < newElements.length; j++) {
+    //             newElements[j].style.visibility = "visible";
+    //         }
+    //         var player2 = new Player2();
+    //         player2.x = xx;
+    //         player2.y = yy;
+    //         //console.log(player2);
+    //         player2List.push(player2);
+    //         masterList.push(player2)
+    //         circleDraw = setInterval("renderCircles(masterList)", 20);
+    //         circleGen = setInterval("createCircle(circles)", 2000);
+    //         heartDropp = setInterval("dropHeart(heartt)", 6000);
+    //         wormDrop = setInterval("dropWorm(worms)", 5000)
+    //         gameTimer = setInterval("incrementTimer()", 1000);
+    //         intervals.push(circleGen, circleDraw, gameTimer, heartDropp, wormDrop);
+    //         started = true;
 
-        };
-    };
+    //     };
+    // };
 
 };
 
 
 
+// Функция останавливает текущую игру и выводит её результат
+function gameOver() {
+    playing = false;
+
+    // Корректируем отображение UI в соответствии с окончанием игрового процесса
+    toggleSaveControls(true);
+
+    title.innerHTML = 'Игра окончена! (Вы набрали: ' + Math.round(score) + ' очков)';
+
+    window.location.hash = '#Menu';
+    //gameOver2();
+
+    var total = wormScore + timer;
+    if (total > highScore) {
+        highScore = total
+    }
+    reset();
 
 
+}
 
+function toggleSaveControls(show) {
+    userName.style.display = show ? 'block' : 'none';
+    storeUserNameButton.style.display = show ? 'block' : 'none';
+}
+this.toggleSaveControls = toggleSaveControls;
 
 //К_Л_А_С_С_Ы__Н_А_Ч_А_Л_О//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Описываем класс cоздания новых элементов
@@ -545,8 +577,8 @@ function dropHeart(circleList) {
 //Класс игрока2
 function Player2() {
     this.radius = 20;
-    this.x = h / 2; this.y = w / 2;
-    this.colour = "black";
+    //this.x = h / 2; this.y = w / 2;
+    //this.colour = "black";
     this.alpha = 1
     this.type = "player2";
     this.life = 250;
@@ -605,19 +637,19 @@ function levelUp() {
 };
 
 //Конец игры
-function gameOver2() {
-    gameOver();
-    var total = wormScore + timer;
-    if (total > highScore) {
-        highScore = total
-    }
-    reset();
-    ctx.font = "50px Electrolize"
-    ctx.fillStyle = "white"
-    ctx.fillText("G A M E   O V E R", w / 4 - 30, h / 2 - 70)
-    ctx.fillText("Score: " + total, w / 4 + 50, h / 2 - 10)
-    ctx.fill()
-};
+// function gameOver2() {
+//     //gameOver();
+//     var total = wormScore + timer;
+//     if (total > highScore) {
+//         highScore = total
+//     }
+//     reset();
+//     ctx.font = "50px Electrolize"
+//     ctx.fillStyle = "white"
+//     ctx.fillText("G A M E   O V E R", w / 4 - 30, h / 2 - 70)
+//     ctx.fillText("Score: " + total, w / 4 + 50, h / 2 - 10)
+//     ctx.fill()
+// };
 
 //формируем лист фигур
 function createCircle(circleList) {
@@ -676,7 +708,8 @@ function renderCircles(list) {
     };
     p = player2List[0];
     if (p.life <= 0) {
-        gameOver2();
+        //gameOver2();
+        gameOver();
     }
 };
 

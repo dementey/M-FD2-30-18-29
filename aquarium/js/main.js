@@ -99,6 +99,7 @@ gameFunc = new function () {
             player = new Player();
             // Вызываем функцию принудительного пересчета размеров игрового поля для корректного отображения
             resizeHandler();
+            
             window.addEventListener('deviceorientation', function (event) {
                 console.log(viewportWidth+'!'+viewportHeight);
                 mouseX = viewportWidth * 0.5 + event.gamma;

@@ -1,10 +1,7 @@
 window.onhashchange = SwitchToStateFromURLHash;
 
 function SwitchToStateFromURLHash(param) {
-   
     var URLHash = window.location.hash;
-
-    //console.log('Закладка изменилась: ', URLHash);
 
     function changeRepresentation(state) {
         var title,
@@ -25,7 +22,7 @@ function SwitchToStateFromURLHash(param) {
         }
         title = prefix + 'Aquaruium';
         document.getElementsByTagName('title')[0].innerHTML = title;
-    }
+    };
 
     var state = decodeURIComponent(URLHash.substr(1)),
         confirmFlag = true;
@@ -35,15 +32,15 @@ function SwitchToStateFromURLHash(param) {
             if (gameFunc.isPlaying()) {
                 if (!(confirm('Внимание! Текущий прогресс игры будет потерян'))) {
                     confirmFlag = false;
-                }
-            }
-
+                };
+            };
             if (confirmFlag) {
                 changeRepresentation(state);
                 gameFunc.stopGame();
             } else {
                 history.replaceState('Start');
-            }
+            };
+            reset();
             break;
 
         case 'Start':
@@ -52,12 +49,14 @@ function SwitchToStateFromURLHash(param) {
             } else {
                 changeRepresentation(state);
                 gameFunc.startGame();
+
             }
             break;
 
         case 'Records':
             changeRepresentation(state);
             gameFunc.showRecords();
+            reset();
             break;
 
         default:

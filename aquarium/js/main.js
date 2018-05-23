@@ -15,7 +15,7 @@ var storeUserNameButton;
 var backToMenuButton;
 var userName;
 var title;
-var startButton;
+var startButton; 
 var audio;
 var mute;
 var isLoud = true;
@@ -95,6 +95,7 @@ gameFunc = new function () {
             window.addEventListener('resize', resizeHandler, false);
             window.addEventListener('orientationchange', resizeHandler, false);
             mute.addEventListener('click', muteHandler, false);
+            document.addEventListener('deviceorientation', deviceorientationHandler, true);
             // Инициируем игрока 
             player = new Player();//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // Вызываем функцию принудительного пересчета размеров игрового поля для корректного отображения
@@ -215,11 +216,11 @@ gameFunc = new function () {
     function touchEndHandler(event) {
         mouseIsDown = false;
     };
-    //-----------------------------------------------------------------------------------
-    window.addEventListener('deviceorientation', function (event) {
-        mouseX = event.gamma;
-        mouseY = event.beta;
-    }, true);
+    //Событие акселерометра/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    function deviceorientationHandler(event) {
+        mouseX = event.gamma-cvx;
+        mouseY = event.beta-cvy;
+    };
     // Фунция обработчик события изменения размера 
     function resizeHandler() {
         var margin,
@@ -329,15 +330,10 @@ gameFunc = new function () {
         if (bubbles.length < 30) {
             bubbles.push(positionNewElement(new Bubble()));
         };
-        // Обновляем и отображаем текущие игровые показатели активной игры    
-        if (playing) {
-            scoreText = 'Счёт: ' + Math.round(score);
-            checkScore.innerHTML = scoreText;
-        }
         if (playing) {
             player2.x = mouseX;
             player2.y = mouseY;
-        }
+        };
     };
 
     // функция для позиционирования новых элементов игры
@@ -467,11 +463,10 @@ function Player2() {
     this.hits = 0;
 };
 Player2.prototype = new Circle();
-Player2.prototype.move = function (xx, yy) {
-    //this.x += ipx / 20;
-    //this.y += ipy / 20;
-
-};
+// Player2.prototype.move = function (xx, yy) {
+//     //this.x += ipx / 20;
+//     //this.y += ipy / 20;
+// };
 Player2.prototype.draw = function () {
     ctx.fillStyle = this.colour
     ctx.beginPath();
@@ -505,9 +500,8 @@ function gameOver() {
     playing = false;
     // Корректируем отображение в соответствии с окончанием игрового процесса
     toggleSaveControls(true);
-    title.innerHTML = 'Игра окончена! (Вы набрали: ' + Math.round(score) + ' очков)';
+    title.innerHTML = 'Игра окончена! Ваш результат: ' + Math.round(score);
     window.location.hash = '#Menu';
-    //gameOver2();
     reset();
 };
 function toggleSaveControls(show) {
@@ -648,50 +642,3 @@ function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 //Ф_У_Н_К_Ц_И_И__К_О_Н_Е_Ц///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-//Слушаем акселерометр
-// window.addEventListener('deviceorientation', function (event) {
-//     ipx = event.gamma;
-//     ipy = event.beta;
-// }, true);
-
-// //Подписываемся на вжатие клавиш
-// window.addEventListener('keydown', function (EO) {
-//     EO = EO || window.event;
-//     if (EO.keyCode === 37) {//курсор <
-//         ipx -= 10;
-//     }
-//     if (EO.keyCode === 38) {//курсор ^	
-//         ipy -= 10;
-//     }
-//     if (EO.keyCode === 39) {//курсор >
-//         ipx += 10;
-//     }
-//     if (EO.keyCode === 40) {//курсор v
-//         ipy += 10;
-//     }
-// });
-
-// //Подписываемся на отпускание клавиш
-// window.addEventListener('keyup', function (EO) {
-//     EO = EO || window.event;
-//     if (EO.keyCode === 37) {//курсор <
-//         ipx = 0;
-//     }
-//     if (EO.keyCode === 38) {//курсор ^	
-//         ipy = 0;
-//     }
-//     if (EO.keyCode === 39) {//курсор >
-//         ipx = 0;
-//     }
-//     if (EO.keyCode === 40) {//курсор v
-//         ipy = 0;
-//     }
-// });
-

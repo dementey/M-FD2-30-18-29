@@ -93,11 +93,17 @@ gameFunc = new function () {
             window.addEventListener('resize', resizeHandler, false);
             window.addEventListener('orientationchange', resizeHandler, false);
             mute.addEventListener('click', muteHandler, false);
+
             //window.addEventListener('deviceorientation', deviceorientationHandler, true);
             // Инициируем игрока 
             player = new Player();
             // Вызываем функцию принудительного пересчета размеров игрового поля для корректного отображения
             resizeHandler();
+            window.addEventListener('deviceorientation', function (event) {
+                console.log(viewportWidth+'!'+viewportHeight);
+                mouseX = viewportWidth * 0.5 + event.gamma;
+                mouseX = viewportHeight * 0.5 + event.beta;
+            }, true);
             // Устанавливаем интервал перерисовки
             window.setInterval(game, frequency);
         }
@@ -220,10 +226,7 @@ gameFunc = new function () {
     //     mouseY = event.beta - cvy;
     // };
 
-    window.addEventListener('deviceorientation', function (event) {
-        mouseX = viewportWidth * 0.5 + event.gamma;
-        mouseX = viewportHeight * 0.5 + event.beta;
-    }, true);
+
 
     // Фунция обработчик события изменения размера 
     function resizeHandler() {

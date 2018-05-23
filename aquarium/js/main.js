@@ -95,7 +95,7 @@ gameFunc = new function () {
             window.addEventListener('resize', resizeHandler, false);
             window.addEventListener('orientationchange', resizeHandler, false);
             mute.addEventListener('click', muteHandler, false);
-            document.addEventListener('deviceorientation', deviceorientationHandler, true);
+            document.addEventListener('deviceorientation', deviceorientationHandler, false);
             // Инициируем игрока 
             player = new Player();//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // Вызываем функцию принудительного пересчета размеров игрового поля для корректного отображения
@@ -219,8 +219,9 @@ gameFunc = new function () {
     //Событие акселерометра/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function deviceorientationHandler(event) {
         event.preventDefault();
-        mouseX = cvx - event.gamma*0.5;
-        mouseY = cvy - event.beta*0.5;
+        mouseX = cvx //- event.gamma*0.5;
+        mouseY = cvy //- event.beta*0.5;
+        mouseIsDown = true;
     };
     // Фунция обработчик события изменения размера 
     function resizeHandler() {

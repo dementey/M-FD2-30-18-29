@@ -298,7 +298,7 @@ gameFunc = new function () {
             player.position.x += (mouseX - player.position.x) * 0.13;
             player.position.y += (mouseY - player.position.y) * 0.13;
             player2.x = player.position.x;
-            player2.y = player.position.y-40;
+            player2.y = player.position.y - 40;
             // Инкрементируем получение игровых очков за сложность и перемещение
             var total = wormScore + timer;
             if (total > highScore) {

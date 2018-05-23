@@ -297,6 +297,8 @@ gameFunc = new function () {
             // Задаём задержку перемещения игрока
             player.position.x += (mouseX - player.position.x) * 0.13;
             player.position.y += (mouseY - player.position.y) * 0.13;
+            player2.x = player.position.x;
+            player2.y = player.position.y-40;
             // Инкрементируем получение игровых очков за сложность и перемещение
             var total = wormScore + timer;
             if (total > highScore) {
@@ -330,10 +332,7 @@ gameFunc = new function () {
         if (bubbles.length < 30) {
             bubbles.push(positionNewElement(new Bubble()));
         };
-        if (playing) {
-            player2.x = mouseX;
-            player2.y = mouseY;
-        };
+
     };
 
     // функция для позиционирования новых элементов игры
@@ -455,18 +454,13 @@ function dropHeart(circleList) {
 //Класс игрока
 function Player2() {
     this.radius = 20;
-    //this.x = h / 2; this.y = w / 2;
-    //this.colour = "black";
     this.alpha = 1
     this.type = "player2";
     this.life = 250;
     this.hits = 0;
 };
 Player2.prototype = new Circle();
-// Player2.prototype.move = function (xx, yy) {
-//     //this.x += ipx / 20;
-//     //this.y += ipy / 20;
-// };
+
 Player2.prototype.draw = function () {
     ctx.fillStyle = this.colour
     ctx.beginPath();

@@ -99,13 +99,7 @@ gameFunc = new function () {
             player = new Player();
             // Вызываем функцию принудительного пересчета размеров игрового поля для корректного отображения
             resizeHandler();
-            
-            window.addEventListener('deviceorientation', function (event) {
-                console.log(viewportWidth+'!'+viewportHeight);
-                mouseX = viewportWidth * 0.5 + event.gamma;
-                mouseY = viewportHeight * 0.5 + event.beta;
 
-            }, true);
             // Устанавливаем интервал перерисовки
             window.setInterval(game, frequency);
         }
@@ -210,6 +204,10 @@ gameFunc = new function () {
             event.preventDefault();
             mouseX = event.touches[0].pageX - cvx;
             mouseY = event.touches[0].pageY - cvy;
+            window.addEventListener('deviceorientation', function (event) {
+                mouseX += event.gamma;
+                mouseX += event.beta;
+            }, true);
             mouseIsDown = true;
         };
     };
@@ -217,6 +215,10 @@ gameFunc = new function () {
         if (event.touches.length == 1) {
             mouseX = event.touches[0].pageX - cvx;
             mouseY = event.touches[0].pageY - cvy;
+            window.addEventListener('deviceorientation', function (event) {
+                mouseX += event.gamma;
+                mouseX += event.beta;
+            }, true);
         };
     };
     function touchEndHandler(event) {
